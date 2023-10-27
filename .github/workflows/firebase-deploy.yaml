@@ -1,8 +1,13 @@
 name: Firebase Deploy
 run-name: ${{ github.actor }} is deploying 🚀
-on: [merge]
+on:
+  pull_request:
+    types:
+      - closed
+
 jobs:
-  Explore-GitHub-Actions:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
