@@ -23,7 +23,7 @@ jobs:
       - name: Build the App
         run: |
           npm run build
-      - name: Deploy the App
-        run: |
-          firebase deploy
+      # - name: Deploy the App
+        # run: |
+        #   firebase deploy
       - run: echo "🍏 This job's status is ${{ job.status }}."
