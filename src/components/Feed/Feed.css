@@ -6,3 +6,9 @@
     display: flex !important;
     flex-direction: column !important;
 }
+
+.post-button{
+    display:flex;
+    justify-content: end;
+    margin-bottom: 20;
+}

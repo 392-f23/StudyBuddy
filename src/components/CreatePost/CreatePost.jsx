@@ -1,6 +1,7 @@
 import React from "react";
 import { Stack, TextField, Button, Alert } from "@mui/material";
 import { useState } from "react";
+import Banner from "../Banner/Banner";
 
 export const CreatePost = () => {
     const [showAlert, setShowAlert] = useState(false);
@@ -23,8 +24,8 @@ export const CreatePost = () => {
       />
       <TextField id="outlined-basic" label="Class" variant="outlined" />
       <TextField id="outlined-basic" label="Location" variant="outlined" />
-      {/* <TextField id="outlined-basic" label="Contact" variant="outlined" /> */}
       <Button onClick={submitPost} variant="contained" disabled>Create</Button>
+      <Banner/>
     </Stack>
   );
 };

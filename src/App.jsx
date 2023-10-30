@@ -13,12 +13,13 @@ const App = () => {
 
   return (
     <Container maxWidth="sm">
-      <Header />
       <BrowserRouter>
+      <Header />
         <Routes>
           <Route path="/" element={<Feed posts={posts} />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create_post" element={<CreatePost />} />
         </Routes>
       </BrowserRouter>
     </Container>

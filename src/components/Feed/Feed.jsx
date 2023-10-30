@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import Banner from "../Banner/Banner";
 import { PostItem } from "../PostItem/PostItem";
@@ -8,8 +8,13 @@ import ContactModal from "../ContactModal/ContactModal";
 import AvailabilityModal from "../AvailabilityModal/AvailabiltyModal";
 import InfoDialog from "../Dialog/Dialog";
 import Filters from "../Filters/Filters";
+import { Add } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const Feed = ({ posts }) => {
+
+  const navigate = useNavigate();
+
   const [openContact, setOpenContact] = useState(false);
 
   const handleClickOpenContact = () => {
@@ -19,6 +24,7 @@ const Feed = ({ posts }) => {
   const handleCloseContact = () => {
     setOpenContact(false);
   };
+  
 
   const [openAvailability, setOpenAvailability] = useState(false);
 
@@ -71,6 +77,11 @@ const Feed = ({ posts }) => {
         mode={mode}
         setMode={setMode}
       />
+
+      <div className="post-button">
+        <Button startIcon={<Add />} onClick={()=> navigate("/create_post") }>Add Post</Button>
+      </div>
+
       <Container maxWidth="sm">
         <Stack spacing={2} className="feed-stack">
           {posts &&
