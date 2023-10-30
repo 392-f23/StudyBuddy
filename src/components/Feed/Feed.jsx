@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import Banner from "../Banner/Banner";
-import Header from "../Header/Header";
 import { PostItem } from "../PostItem/PostItem";
 import "./Feed.css";
 import ContactModal from "../ContactModal/ContactModal";
@@ -66,7 +65,6 @@ const Feed = ({ posts }) => {
       >
         <AvailabilityModal contact={contact} />
       </InfoDialog>
-      <Header />
       <Filters
         course={course}
         setCourse={setCourse}
