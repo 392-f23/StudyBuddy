@@ -3,6 +3,7 @@ import { Paper, BottomNavigation, BottomNavigationAction} from "@mui/material";
 import SvgIcon from '@mui/material/SvgIcon';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { Link } from 'react-router-dom';
 
 function HomeIcon(props) {
   return (
@@ -13,20 +14,24 @@ function HomeIcon(props) {
 }
 
 const Banner = () => {
-  const [value, setValue] = React.useState(0);
-
   return (
     <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-      <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <BottomNavigationAction label="Home" icon={<HomeIcon/>} />
-        <BottomNavigationAction label="Schedule" icon={<CalendarMonthIcon />}/>
-        <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />}/>
+      <BottomNavigation showLabels>
+        <BottomNavigationAction 
+          label="Home" 
+          icon={<HomeIcon/>} 
+          component={Link}
+          to="/"/>
+        <BottomNavigationAction 
+          label="Schedule" 
+          icon={<CalendarMonthIcon/>}
+          component={Link}
+          to="/schedule"/>
+        <BottomNavigationAction 
+          label="Profile" 
+          icon={<AccountCircleIcon/>}
+          component={Link}
+          to="/profile"/>
       </BottomNavigation>
     </Paper>
   );

@@ -1,15 +1,20 @@
 import Feed from "./components/Feed/Feed";
-import Banner from "./components/Banner/Banner";
-import Header from "./components/Header/Header";
+import Schedule from "./components/Schedule/Schedule";
+import Profile from "./components/Profile/Profile";
 import "./App.css";
 import { Container} from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
     <Container maxWidth='sm'>
-      <Header />
-      <Feed />
-      <Banner />
+      <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Feed />}/>
+        <Route path='/schedule' element={<Schedule />}/>
+        <Route path='/profile' element={<Profile />}/>
+      </Routes>
+      </BrowserRouter>
     </Container>
   );
 };
