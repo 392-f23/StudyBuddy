@@ -3,14 +3,18 @@ import Banner from "./components/Banner/Banner";
 import Header from "./components/Header/Header";
 import "./App.css";
 import { Container} from "@mui/material";
+import { CreatePost } from "./components/CreatePost/CreatePost";
 
 const App = () => {
   return (
-    <Container maxWidth='sm'>
-      <Header />
-      <Feed />
-      <Banner />
-    </Container>
+    <>
+    <CreatePost/>
+    </>
+    // <Container maxWidth='sm'>
+    //   <Header />
+    //   <Feed />
+    //   <Banner />
+    // </Container>
   );
 };
 
