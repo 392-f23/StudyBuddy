@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 const Profile = () => {
   return (
     <Container maxWidth="sm">
-      <div>Profile</div>
+      <div className="main">Profile Page</div>
       <Banner />
     </Container>
   );

@@ -4,8 +4,8 @@ import { Container } from "@mui/material";
 
 const Schedule = () => {
   return (
-    <Container maxWidth="sm">
-      <div>Schedule</div>
+    <Container maxWidth="sm" >
+      <div className="main">Schedule Page</div>
       <Banner />
     </Container>
   );
