@@ -3,6 +3,7 @@ import Schedule from "./components/Schedule/Schedule";
 import Profile from "./components/Profile/Profile";
 import "./App.css";
 import { Container} from "@mui/material";
+import { CreatePost } from "./components/CreatePost/CreatePost";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
