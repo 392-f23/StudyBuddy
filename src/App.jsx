@@ -5,8 +5,14 @@ import "./App.css";
 import { Container} from "@mui/material";
 import { CreatePost } from "./components/CreatePost/CreatePost";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useDbData } from "./utilities/firebase";
 
 const App = () => {
+
+  const [courses, result] = useDbData("/courses")
+
+  console.log(courses)
+  
   return (
     <Container maxWidth='sm'>
       <BrowserRouter>
