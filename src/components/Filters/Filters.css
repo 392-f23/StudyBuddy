@@ -1,0 +1,8 @@
+.filter {
+    margin: 1rem auto !important;
+}
+
+.filters {
+    display: flex;
+    margin-bottom: 1rem;
+}

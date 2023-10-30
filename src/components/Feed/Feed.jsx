@@ -8,8 +8,7 @@ import "./Feed.css";
 import ContactModal from "../ContactModal/ContactModal";
 import AvailabilityModal from "../AvailabilityModal/AvailabiltyModal";
 import InfoDialog from "../Dialog/Dialog";
-
-
+import Filters from "../Filters/Filters";
 
 const Feed = ({ posts }) => {
   const [openContact, setOpenContact] = useState(false);
@@ -34,21 +33,62 @@ const Feed = ({ posts }) => {
 
   const [contact, SetContact] = useState({});
 
+  const [course, setCourse] = useState("All");
+  const [mode, setMode] = useState("Both");
+
+  const displayCourseBasedOnMode = (location) => {
+    if (mode === "Both") {
+      return true;
+    }
+
+    if (mode === "Remote") {
+      return location === "Remote";
+    }
+
+    if (mode === "In-Person") {
+      return location !== "Remote";
+    }
+  };
 
   return (
-    <Container maxWidth='sm'>
-      <InfoDialog title={"Contact"} open={openContact} handleClose={handleCloseContact}>
+    <Container maxWidth="sm" className="home-container">
+      <InfoDialog
+        title={"Contact"}
+        open={openContact}
+        handleClose={handleCloseContact}
+      >
         <ContactModal contact={contact} />
       </InfoDialog>
-      <InfoDialog title={"Availability"} open={openAvailability} handleClose={handleCloseAvailability}>
+      <InfoDialog
+        title={"Availability"}
+        open={openAvailability}
+        handleClose={handleCloseAvailability}
+      >
         <AvailabilityModal contact={contact} />
       </InfoDialog>
       <Header />
-      <Container maxWidth='sm'>
+      <Filters
+        course={course}
+        setCourse={setCourse}
+        mode={mode}
+        setMode={setMode}
+      />
+      <Container maxWidth="sm">
         <Stack spacing={2} className="feed-stack">
-          {posts && posts.map((item, index) =>
-            <PostItem key={index} post={item} handleOpenContact={handleClickOpenContact} handleOpenAvailability={handleClickOpenAvailability}/>
-          )}
+          {posts &&
+            posts
+              .filter((post) =>
+                course !== "All" ? post.class === course : true
+              )
+              .filter((post) => displayCourseBasedOnMode(post.location))
+              .map((item, index) => (
+                <PostItem
+                  key={index}
+                  post={item}
+                  handleOpenContact={handleClickOpenContact}
+                  handleOpenAvailability={handleClickOpenAvailability}
+                />
+              ))}
         </Stack>
       </Container>
       <Banner />
