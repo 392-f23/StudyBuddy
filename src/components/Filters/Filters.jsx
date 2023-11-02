@@ -13,7 +13,7 @@ function Filters({ course, setCourse, mode, setMode }) {
     setMode(event.target.value);
   };
 
-  const courses = ["CHEM 330", "MATH 328", "CS 392", "CS 330"];
+  const courses = ["CHEM 151", "MATH 250", "COMP_SCI 392", "COMP_SCI 330"];
 
   return (
     <div className="filters">

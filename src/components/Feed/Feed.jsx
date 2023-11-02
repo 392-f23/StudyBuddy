@@ -12,6 +12,7 @@ import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const Feed = ({ posts }) => {
+  console.log("these are the posts:", posts);
 
   const navigate = useNavigate();
 
@@ -24,7 +25,6 @@ const Feed = ({ posts }) => {
   const handleCloseContact = () => {
     setOpenContact(false);
   };
-  
 
   const [openAvailability, setOpenAvailability] = useState(false);
 
@@ -79,13 +79,15 @@ const Feed = ({ posts }) => {
       />
 
       <div className="post-button">
-        <Button startIcon={<Add />} onClick={()=> navigate("/create_post") }>Add Post</Button>
+        <Button startIcon={<Add />} onClick={() => navigate("/create_post")}>
+          Add Post
+        </Button>
       </div>
 
       <Container maxWidth="sm">
         <Stack spacing={2} className="feed-stack">
           {posts &&
-            posts
+            Object.values(posts)
               .filter((post) =>
                 course !== "All" ? post.class === course : true
               )
