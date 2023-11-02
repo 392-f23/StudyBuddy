@@ -89,7 +89,7 @@ const Feed = ({ posts }) => {
           {posts &&
             Object.values(posts)
               .filter((post) =>
-                course !== "All" ? post.class === course : true
+                course !== "All" ? post.course === course : true
               )
               .filter((post) => displayCourseBasedOnMode(post.location))
               .map((item, index) => (
