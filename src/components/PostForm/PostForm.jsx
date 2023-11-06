@@ -7,7 +7,7 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 
-export const CreatePost = () => {
+export const PostForm = () => {
   // HARD-CODED VALUE!!!
   const user_id = "12345";
 
