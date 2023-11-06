@@ -44,3 +44,15 @@
     margin-top: 0.5rem;
     color: black;
 }
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.post-time {
+    width: 40%;
+    text-align: right;
+    margin: 0;
+}

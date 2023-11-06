@@ -17,7 +17,10 @@ export const PostItem = ({
 
   return (
     <Item className="post-item">
-      <h2 className="post-description">{post.title}</h2>
+      <div className="post-header">
+        <h2 className="post-description">{post.title}</h2>
+        <h6 className="post-time">2 hrs ago</h6>
+      </div>
       <Chip className="post-course" size="small" label={post.course} />
       <p className="post-text">{post.description}</p>
       <p className="post-name">{post.user}</p>
