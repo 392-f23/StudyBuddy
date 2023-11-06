@@ -55,7 +55,9 @@ export const PostItem = ({
       <Chip className="post-course" size="small" label={post.course} />
       <p className="post-text">{post.description}</p>
       <p className="post-name">{post.user}</p>
-      <p className="post-location">Location: {post.location}</p>
+      <p className="post-location">
+        <b>Location</b>: {post.location}
+      </p>
       <div className="button-flex">
         <Button variant="contained" onClick={handleOpenContact}>
           Contact
