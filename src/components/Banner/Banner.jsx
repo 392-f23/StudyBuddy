@@ -24,7 +24,7 @@ const Banner = () => {
           label="Home"
           icon={<HomeIcon />}
           component={Link}
-          to="/"
+          to="/feed"
         />
         <BottomNavigationAction
           label="Schedule"

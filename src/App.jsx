@@ -12,21 +12,18 @@ import { Signin } from "./components/Signin/Signin";
 
 const App = () => {
   const [posts, result] = useDbData("/posts");
-;
-  const user = false
   return (
     <div>
       <Header />
       <Container maxWidth="sm">
         <BrowserRouter>
-
           <Routes>
-            <Route path="/" element={user? <Feed posts={posts} />: <Signin/>} />
+            <Route path="/" element={<Signin />} />
+            <Route path="/feed" element={<Feed />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/create_post" element={<CreatePost />} />
           </Routes>
-
         </BrowserRouter>
       </Container>
     </div>
