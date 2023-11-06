@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import InfoDialog from "../Dialog/Dialog";
 import { useNavigate } from "react-router-dom";
 import { SignUp } from "../SignUp/SignUp";
+import "./Signin.css";
 
 export const Signin = () => {
   const navigate = useNavigate();

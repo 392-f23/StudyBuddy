@@ -1,0 +1,10 @@
+.signinstack {
+    display: flex;
+    align-items: center;
+    padding: 8rem 0rem;
+}
+.logoimg {
+    width: 8rem;
+    height: 8rem;
+    margin-bottom: 2rem;
+}
