@@ -8,21 +8,25 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDbData } from "./utilities/firebase";
 import Header from "./components/Header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Signin } from "./components/Signin/Signin";
 
 const App = () => {
   const [posts, result] = useDbData("/posts");
-
+;
+  const user = false
   return (
     <div>
       <Header />
       <Container maxWidth="sm">
         <BrowserRouter>
+
           <Routes>
-            <Route path="/" element={<Feed posts={posts} />} />
+            <Route path="/" element={user? <Feed posts={posts} />: <Signin/>} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/create_post" element={<CreatePost />} />
           </Routes>
+
         </BrowserRouter>
       </Container>
     </div>
