@@ -5,6 +5,7 @@ import { useDbUpdate, useDbData } from "../../utilities/firebase";
 import { useEffect, useState } from "react";
 import InfoDialog from "../Dialog/Dialog";
 import { useNavigate } from "react-router-dom";
+import './Signin.css'
 
 export const Signin = () => {
   const navigate = useNavigate();
@@ -37,8 +38,8 @@ export const Signin = () => {
   }, [user, userData]);
 
   return (
-    <Stack>
-      <div>Logo</div>
+    <Stack className='signinstack'>
+      <img src='../../../sb_logo.png' className='logoimg'/>
       <InfoDialog
         title={"Enter Information"}
         open={showForm}
@@ -46,7 +47,7 @@ export const Signin = () => {
       >
         <p>hi</p>
       </InfoDialog>
-      ;<Button onClick={FirebaseSignIn}>Sign in</Button>
+      <Button variant="contained" color="secondary" className='signinbutton' onClick={FirebaseSignIn}>Sign in</Button>
     </Stack>
   );
 };
