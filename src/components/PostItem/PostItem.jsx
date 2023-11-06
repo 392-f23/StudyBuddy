@@ -15,11 +15,42 @@ export const PostItem = ({
     color: theme.palette.text.secondary,
   }));
 
+  const calculateTimeAgo = (date) => {
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    if (seconds === 0) {
+      return "NOW";
+    }
+
+    var interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + " YRS AGO";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + "mo";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + "d";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + "h";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + "m";
+    }
+    return Math.floor(seconds) + "s";
+  };
+
   return (
     <Item className="post-item">
       <div className="post-header">
         <h2 className="post-description">{post.title}</h2>
-        <h6 className="post-time">2 hrs ago</h6>
+        <h6 className="post-time">{calculateTimeAgo(post.time)}</h6>
       </div>
       <Chip className="post-course" size="small" label={post.course} />
       <p className="post-text">{post.description}</p>

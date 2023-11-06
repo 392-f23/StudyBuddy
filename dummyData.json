@@ -10,13 +10,6 @@
     }
 },
 "posts": {
-    "21": {
-        "user_id": 12345,
-        "title": "need help",
-        "description": "need a partner",
-        "course": "COMP_SCI 392",
-        "location": "Mudd"
-    }
 },
 "courses": {
     "COMP_SCI 392": {

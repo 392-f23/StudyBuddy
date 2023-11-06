@@ -32,6 +32,7 @@ export const CreatePost = () => {
 
     const post = {
       title: title,
+      time: Date.now(),
       description: description,
       course: course,
       location: location,
