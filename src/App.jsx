@@ -20,7 +20,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Signin />} />
-            <Route path="/feed" element={<Feed />} />
+            <Route path="/feed" element={<Feed posts={posts} />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/schedule" element={<Schedule />} />
             <Route path="/profile" element={<Profile />} />
