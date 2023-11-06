@@ -12,8 +12,6 @@ import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const Feed = ({ posts }) => {
-  console.log("these are the posts:", posts);
-
   const navigate = useNavigate();
 
   const [openContact, setOpenContact] = useState(false);
@@ -88,6 +86,7 @@ const Feed = ({ posts }) => {
         <Stack spacing={2} className="feed-stack">
           {posts &&
             Object.values(posts)
+              .sort((postOne, postTwo) => postTwo.time - postOne.time)
               .filter((post) =>
                 course !== "All" ? post.course === course : true
               )
