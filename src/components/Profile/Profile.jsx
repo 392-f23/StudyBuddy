@@ -1,9 +1,12 @@
 import Banner from "../Banner/Banner";
 import "./Profile.css";
-import { Typography, Stack, Container, Avatar, List, ListItem, ListItemText, Autocomplete, TextField } from "@mui/material";
+import { Typography, Stack, Container, Avatar, List, ListItem, ListItemText, Autocomplete, TextField, Button } from "@mui/material";
 import * as React from 'react';
+import { FirebaseSignOut } from "../../utilities/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const style = {
     width: '100%',
     maxWidth: '20rem',
@@ -13,10 +16,24 @@ const Profile = () => {
     marginTop: '1rem'
   };
 
+  const style2 = {
+    width: '100%',
+    maxWidth: '20rem',
+    bgcolor: 'background.paper',
+    borderRadius: '4px',
+    marginBottom: '1rem',
+    marginTop: '0rem'
+  };
+
+  const signOut = () => {
+    FirebaseSignOut();
+    navigate('/')
+  }
+
   return (
     <Container maxWidth="sm">
       <Stack className="main">
-        <Avatar sx={{ width: 60, height: 60, marginBottom: '.5rem'}}></Avatar>
+        <Avatar sx={{ width: 40, height: 40, marginBottom: '.5rem'}}></Avatar>
         <h3>First Last</h3>
         <List sx={style}>
           <ListItem divider>
@@ -91,7 +108,7 @@ const Profile = () => {
           </ListItem>
         </List>
         <Autocomplete
-          sx={style}
+          sx={style2}
           multiple
           id="tags-outlined"
           options={['CS211', 'CS212']}
@@ -105,6 +122,7 @@ const Profile = () => {
             />
           )}
         />
+        <Button size="small" variant="contained" onClick={signOut}>Sign Out</Button>
       </Stack>
       <Banner />
     </Container>
