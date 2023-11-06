@@ -10,7 +10,7 @@ import Header from "./components/Header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
-  const [posts, result] = useDbData("/courses");
+  const [posts, result] = useDbData("/posts");
 
   return (
     <div>

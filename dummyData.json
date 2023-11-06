@@ -1,0 +1,33 @@
+{"users": {
+    "12345": {    
+        "first_name": "anna",
+        "last_name": "c",
+        "major": "computer science",
+        "grad_year": 2025,
+        "phone_number": "555-555-5555",
+        "classes": ["CHEM 151", "MATH 250", "COMP_SCI 392", "COMP_SCI 330"],
+        "profileType": "Anonymous"
+    }
+},
+"posts": {
+},
+"courses": {
+    "COMP_SCI 392": {
+        "course_name": "Rapid Software Prototyping",
+        "posts": []
+    },
+    "CHEM 151": {
+        "course_name": "General Chemistry I",
+        "posts": []
+    },
+    "MATH 250": {
+        "course_name": "Elementary Differential Equations",
+        "posts": []
+    },
+    "COMP_SCI 330": {
+        "course_name": "Human Computer Interaction",
+        "posts": []
+    }
+}
+}
+
