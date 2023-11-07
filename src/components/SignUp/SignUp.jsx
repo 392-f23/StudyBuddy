@@ -124,7 +124,7 @@ export const SignUp = () => {
         id="outlined-basic"
         variant="outlined"
         required
-        placeholder='Courses (list 1-5 in this format: "CHEM 151, MATH 250, COMP_SCI 392, COMP_SCI 330") *'
+        placeholder='Courses (list 1-5 in this format: "CHEM 151, MATH 250, COMP_SCI 392, COMP_SCI 330")'
         multiline
         rows={4}
       />
@@ -135,7 +135,7 @@ export const SignUp = () => {
         id="outlined-basic"
         variant="outlined"
         required
-        placeholder="Availability *"
+        placeholder='Default Availability (list availible time slots in this format: "MWF 05:00-07:00 pm, TuTh 10:00-11:00 am")'
         multiline
         rows={2}
       />

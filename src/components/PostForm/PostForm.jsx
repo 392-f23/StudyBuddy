@@ -1,28 +1,45 @@
 import React from "react";
 import { Stack, TextField, Button, Alert } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Banner from "../Banner/Banner";
 import { useDbUpdate, useDbData } from "../../utilities/firebase";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const PostForm = () => {
   // HARD-CODED VALUE!!!
-  const user_id = "12345";
+  const auth = getAuth();
+  const [uid, setUid] = useState("");
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUid(user.uid);
+    } else {
+    }
+  });
+  const [userData, setUserData] = useDbData("/users/" + uid);
+  //console.log(userData);
+
+  useEffect(() => {
+    if (typeof userData !== "undefined") {
+      setAvailability(userData.availability);
+      setCourses(userData.courses.split(", "));
+    }
+  }, [userData]);
 
   const [showAlert, setShowAlert] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [course, setCourse] = useState("");
+  const [courses, setCourses] = useState([""]);
   const [location, setLocation] = useState("");
+  const [availability, setAvailability] = useState("");
 
   const [courseData, error1] = useDbData(`/courses/${course}`);
   const [updateCourseData, result1] = useDbUpdate(`/courses/${course}`);
   const [updatePosts, result2] = useDbUpdate(`/posts/`);
 
-  // HARD-CODED
-  const courses = ["CHEM 151", "MATH 250", "COMP_SCI 392", "COMP_SCI 330"];
   const navigate = useNavigate();
 
   const submitPost = () => {
@@ -107,6 +124,18 @@ export const PostForm = () => {
         label="Location"
         variant="outlined"
       />
+
+      <TextField
+        onChange={(e) => setAvailability(e.target.value)}
+        value={availability}
+        id="outlined-basic"
+        variant="outlined"
+        required
+        placeholder='Meeting Availibility (list availible time slots in this format: "MWF 05:00-07:00 pm, TuTh 10:00-11:00 am")'
+        multiline
+        rows={3}
+      />
+
       <Button onClick={submitPost} variant="contained">
         Create
       </Button>
