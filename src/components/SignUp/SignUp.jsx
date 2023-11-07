@@ -113,8 +113,8 @@ export const SignUp = () => {
           label="Profile Type"
           onChange={(e) => setProfileType(e.target.value)}
         >
-          <MenuItem value="Remote">Anonymous</MenuItem>
-          <MenuItem value="In-Person">Public</MenuItem>
+          <MenuItem value="Anonymous">Anonymous</MenuItem>
+          <MenuItem value="Public">Public</MenuItem>
         </Select>
       </FormControl>
 

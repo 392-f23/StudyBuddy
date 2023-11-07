@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
@@ -15,9 +15,27 @@ import Select from '@mui/material/Select';
 import { MuiTelInput } from 'mui-tel-input' //https://www.npmjs.com/package/mui-tel-input
 import { FirebaseSignOut } from "../../utilities/firebase";
 import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useDbData } from "../../utilities/firebase";
 
 
 const Profile = () => {
+
+  const auth = getAuth();
+  const [uid, setUid] = useState("");
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/auth.user
+      setUid(user.uid);
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
+  const [userData, setUserData] = useDbData("/users/" + uid);
+  //console.log(userData)
 
   const navigate = useNavigate();
 
@@ -26,7 +44,7 @@ const Profile = () => {
     navigate('/')
   }
 
-  const [year, setYear] = useState('');
+  const [year, setYear] = useState("");
   const handleChangeYear = (event) => {
     setYear(event.target.value);
   };
@@ -51,10 +69,28 @@ const Profile = () => {
     setMajor(event.target.value)
   }
 
-  const [courses, setCourses] = React.useState('')
+  const [courses, setCourses] = React.useState([''])
   const handleChangeCourses = (event) => {
+    //console.log("Handling Change:");
+    //console.log(event.target.value);
     setCourses(event.target.value)
   }
+
+  const [userDisplayName, setUserDisplayName] = React.useState('');
+
+  useEffect(() => {
+    if (typeof userData !== "undefined") {
+      setYear(userData.year);
+      setPhone(userData.phoneNumber);
+      setMajor((userData.major));
+      console.log(major);
+      setMode(userData.mode);
+      setView(userData.profileType);
+      setCourses(userData.courses.split(", "))
+      //console.log(userData.courses.split(", "));
+      setUserDisplayName(userData.displayName);
+    }
+  }, [userData]);
 
 
   const [editing, setEditing] = useState(true);
@@ -84,7 +120,7 @@ const Profile = () => {
       <Stack className="main">
         <Avatar sx={{ width: 60, height: 60, marginBottom: '.5rem'}}></Avatar>
         <Grid container justifyContent="space-evenly">
-          <h3>First Last</h3>
+          <h3>{userDisplayName}</h3>
           { editing ?
           <Button variant="outlined" onClick={enableEditingView} startIcon={<EditIcon />}>
             Edit
@@ -103,7 +139,7 @@ const Profile = () => {
                   variant="body2"
                 >
                   <FormControl variant='filled' sx={{ width: '100%' }}>
-                    <InputLabel id="demo-simple-select-label">School Year</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Graduation Year</InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
@@ -111,11 +147,12 @@ const Profile = () => {
                       onChange={handleChangeYear}
                       inputProps={{ readOnly: editing }}
                     >
-                      <MenuItem value={"Freshman"}>Freshman</MenuItem>
-                      <MenuItem value={"Sophomore"}>Sophomore</MenuItem>
-                      <MenuItem value={"Junior"}>Junior</MenuItem>
-                      <MenuItem value={"Senior"}>Senior</MenuItem>
-                      <MenuItem value={"Graduate/Other"}>Graduate/Other</MenuItem>
+                      <MenuItem value={"2023"}>2023</MenuItem>
+                      <MenuItem value={"2024"}>2024</MenuItem>
+                      <MenuItem value={"2025"}>2025</MenuItem>
+                      <MenuItem value={"2026"}>2026</MenuItem>
+                      <MenuItem value={"2027"}>2027</MenuItem>
+                      <MenuItem value={"Other"}>Other</MenuItem>
                     </Select>
                   </FormControl>
                 </Typography>
@@ -151,6 +188,7 @@ const Profile = () => {
                     getOptionLabel={(option) => option}
                     filterSelectedOptions
                     readOnly={editing}
+                    value={major}
                     renderInput={(params) => (
                       <TextField
                         variant='filled'
@@ -205,7 +243,7 @@ const Profile = () => {
                       onChange={handleChangeView}
                       inputProps={{ readOnly: editing }}
                     >
-                      <MenuItem value={"Public View"}>Public View</MenuItem>
+                      <MenuItem value={"Public"}>Public View</MenuItem>
                       <MenuItem value={"Anonymous"}>Anonymous</MenuItem>
                     </Select>
                   </FormControl>
@@ -219,10 +257,11 @@ const Profile = () => {
           multiple
           id="tags-outlined"
           onChange={handleChangeCourses}
-          options={["",'CS211', 'CS212','CS213','CS392','CS348','CS349']}
+          options={["",'CHEM 151','CHEM 152','CS211', 'CS212','CS213','CS392','CS348','CS349']}
           getOptionLabel={(option) => option}
           filterSelectedOptions
           readOnly={editing}
+          value={courses}
           renderInput={(params) => (
             <TextField
               {...params}
