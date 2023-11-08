@@ -5,24 +5,21 @@ import {
   onValue,
   ref,
   update,
-  connectDatabaseEmulator,
 } from "firebase/database";
 import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
-  connectAuthEmulator,
-  signInWithCredential,
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCS0fx98HtStiYYtV7V87eQW2jCcCNfjG8",
-  authDomain: "studybuddy-79445.firebaseapp.com",
-  projectId: "studybuddy-79445",
-  storageBucket: "studybuddy-79445.appspot.com",
-  messagingSenderId: "574789157411",
-  appId: "1:574789157411:web:c6b82d8b9ce7370de7e796",
+  apiKey: "AIzaSyDyB26F6H9jRfAJX1z-fteaj62efImESCs",
+  authDomain: "studybuddyreactapp.firebaseapp.com",
+  projectId: "studybuddyreactapp",
+  storageBucket: "studybuddyreactapp.appspot.com",
+  messagingSenderId: "710686183675",
+  appId: "1:710686183675:web:06d89f2fbd1d3b32c0605e"
 };
 
 // Initialize Firebase
