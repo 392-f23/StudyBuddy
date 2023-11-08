@@ -23,17 +23,16 @@ const Profile = () => {
 
   const auth = getAuth();
   const [uid, setUid] = useState("");
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      setUid(user.uid);
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  });
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        console.log("auth errors out.");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
   const [userData, setUserData] = useDbData("/users/" + uid);
   //console.log(userData)
 

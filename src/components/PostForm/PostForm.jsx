@@ -12,12 +12,18 @@ export const PostForm = () => {
   // HARD-CODED VALUE!!!
   const auth = getAuth();
   const [uid, setUid] = useState("");
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUid(user.uid);
-    } else {
-    }
-  });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUid(user.uid);
+      } else {
+        console.log("auth errors out.");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   const [userData, setUserData] = useDbData("/users/" + uid);
   //console.log(userData);
 
@@ -53,7 +59,7 @@ export const PostForm = () => {
       description: description,
       course: course,
       location: location,
-      user_id: user_id,
+      user_id: uid,
     };
 
     updatePosts({ [postUUID]: post });
@@ -89,14 +95,14 @@ export const PostForm = () => {
       <TextField
         onChange={(e) => setTitle(e.target.value)}
         value={title}
-        id="outlined-basic"
+        id="outlined-basic-title"
         label="Title"
         variant="outlined"
       />
       <TextField
         onChange={(e) => setDescription(e.target.value)}
         value={description}
-        id="outlined-basic"
+        id="outlined-basic-desc"
         label="Description"
         multiline
         variant="outlined"
@@ -105,7 +111,7 @@ export const PostForm = () => {
         <InputLabel id="demo-simple-select-label">Course</InputLabel>
         <Select
           labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          id="demo-simple-select-course"
           value={course}
           label="Course"
           onChange={(e) => setCourse(e.target.value)}
@@ -120,15 +126,15 @@ export const PostForm = () => {
       <TextField
         onChange={(e) => setLocation(e.target.value)}
         value={location}
-        id="outlined-basic"
+        id="outlined-basic-loca"
         label="Location"
         variant="outlined"
       />
 
       <TextField
         onChange={(e) => setAvailability(e.target.value)}
-        value={availability}
-        id="outlined-basic"
+        defaultValue={availability}
+        id="outlined-basic-avail"
         variant="outlined"
         required
         placeholder='Meeting Availibility (list availible time slots in this format: "MWF 05:00-07:00 pm, TuTh 10:00-11:00 am")'
