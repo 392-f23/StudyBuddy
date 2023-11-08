@@ -22,12 +22,12 @@ const firebaseConfig = {
   projectId: "studybuddy-79445",
   storageBucket: "studybuddy-79445.appspot.com",
   messagingSenderId: "574789157411",
-  appId: "1:574789157411:web:c6b82d8b9ce7370de7e796"
+  appId: "1:574789157411:web:c6b82d8b9ce7370de7e796",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+const auth = getAuth(app);
 const database = getDatabase(app);
 
 // const auth = getAuth(app);
@@ -74,16 +74,16 @@ const makeResult = (error) => {
   return { timestamp, error, message };
 };
 
-
 const provider = new GoogleAuthProvider();
 export const FirebaseSignIn = async () => {
   signInWithPopup(auth, provider)
     .then((result) => {
+      console.log(result);
       // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      // The signed-in user info.
-      const user = result.user;
+      // const credential = GoogleAuthProvider.credentialFromResult(result);
+      // const token = credential.accessToken;
+      // // The signed-in user info.
+      // const user = result.user;
       // ...
     })
     .catch((error) => {
@@ -95,7 +95,7 @@ export const FirebaseSignIn = async () => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
-      console.log(error);
+      console.log("here", error);
     });
 };
 
