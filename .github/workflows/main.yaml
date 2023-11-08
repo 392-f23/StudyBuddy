@@ -1,12 +1,17 @@
 name: React CI
+run-name: ${{ github.actor }} is pushing and deploying
 
 on: [push]
 
 jobs:
+  # if: github.ref == "main"
   build:
     name: Build and unit test
     runs-on: ubuntu-latest
     steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Actions stuff
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -15,6 +20,7 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
       # - run: npm test
+      - run: echo "🍏 This job's status is ${{ job.status }}."
 
   deploy:
     name: Firebase deploy
