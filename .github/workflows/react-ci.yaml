@@ -2,6 +2,8 @@ name: React CI
 run-name: ${{ github.actor }} is pushing and deploying
 
 on: [push]
+  branches:
+    - master
 
 jobs:
   # build:
@@ -21,7 +23,6 @@ jobs:
       # - run: npm test
 
   deploy:
-    if: github.ref == refs/heads/main
     name: Firebase deploy
     # needs: [build]
     runs-on: ubuntu-latest
