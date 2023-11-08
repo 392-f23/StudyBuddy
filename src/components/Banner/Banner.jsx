@@ -27,12 +27,6 @@ const Banner = () => {
           to="/feed"
         />
         <BottomNavigationAction
-          label="Schedule"
-          icon={<CalendarMonthIcon />}
-          component={Link}
-          to="/schedule"
-        />
-        <BottomNavigationAction
           label="Profile"
           icon={<AccountCircleIcon />}
           component={Link}
