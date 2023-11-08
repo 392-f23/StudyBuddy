@@ -21,7 +21,7 @@ jobs:
       # - run: npm test
 
   deploy:
-    if: github.ref == "refs/heads/main"
+    if: github.ref == refs/heads/main
     name: Firebase deploy
     # needs: [build]
     runs-on: ubuntu-latest
