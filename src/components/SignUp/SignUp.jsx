@@ -11,7 +11,6 @@ import {
   MenuItem,
   Alert,
 } from "@mui/material";
-import Banner from "../Banner/Banner";
 import "./SignUp.css";
 import { useState } from "react";
 import { useAuth } from "../../utilities/firebase";

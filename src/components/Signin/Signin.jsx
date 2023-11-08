@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { Button, Stack } from "@mui/material";
 import { FirebaseSignIn, useAuth } from "../../utilities/firebase";
-import { useDbUpdate, useDbData } from "../../utilities/firebase";
-import InfoDialog from "../Dialog/Dialog";
+import { useDbData } from "../../utilities/firebase";
 import { useNavigate } from "react-router-dom";
-import { SignUp } from "../SignUp/SignUp";
 import "./Signin.css";
 
 export const Signin = () => {

@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const PostForm = () => {
-  // HARD-CODED VALUE!!!
   const auth = getAuth();
   const [uid, setUid] = useState("");
 
@@ -25,8 +24,7 @@ export const PostForm = () => {
   }, []);
 
   const [userData, setUserData] = useDbData("/users/" + uid);
-  //console.log(userData);
-
+  
   useEffect(() => {
     if (typeof userData !== "undefined") {
       setAvailability(userData.availability);

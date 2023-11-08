@@ -10,13 +10,21 @@ import InfoDialog from "../Dialog/Dialog";
 import Filters from "../Filters/Filters";
 import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useDbData } from "../../utilities/firebase";
 
 const Feed = ({ posts }) => {
   const navigate = useNavigate();
+  const [userData, error] = useDbData("/users");
 
+  const [contact, SetContact] = useState({});
+  const [availability, SetAvailability] = useState("");
   const [openContact, setOpenContact] = useState(false);
 
-  const handleClickOpenContact = () => {
+  const handleClickOpenContact = post_item => {
+    console.log(post_item, userData[post_item.user_id])
+    const contact_email = userData[post_item.user_id].email;
+    const contact_phone = userData[post_item.user_id].phoneNumber;
+    SetContact({"email": contact_email, "phone_number": contact_phone})
     setOpenContact(true);
   };
 
@@ -26,15 +34,15 @@ const Feed = ({ posts }) => {
 
   const [openAvailability, setOpenAvailability] = useState(false);
 
-  const handleClickOpenAvailability = () => {
+  const handleClickOpenAvailability = post_item => {
+    const contact_availability = userData[post_item.user_id].availability;
+    SetAvailability(contact_availability);
     setOpenAvailability(true);
   };
 
   const handleCloseAvailability = () => {
     setOpenAvailability(false);
   };
-
-  const [contact, SetContact] = useState({});
 
   const [course, setCourse] = useState("All");
   const [mode, setMode] = useState("Both");
@@ -67,7 +75,7 @@ const Feed = ({ posts }) => {
         open={openAvailability}
         handleClose={handleCloseAvailability}
       >
-        <AvailabilityModal contact={contact} />
+        <AvailabilityModal availability={availability} />
       </InfoDialog>
       <Filters
         course={course}
@@ -95,8 +103,8 @@ const Feed = ({ posts }) => {
                 <PostItem
                   key={index}
                   post={item}
-                  handleOpenContact={handleClickOpenContact}
-                  handleOpenAvailability={handleClickOpenAvailability}
+                  handleOpenContact={() => handleClickOpenContact(item)}
+                  handleOpenAvailability={() => handleClickOpenAvailability(item)}
                 />
               ))}
         </Stack>
