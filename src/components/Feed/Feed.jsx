@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import Banner from "../Banner/Banner";
@@ -10,21 +10,31 @@ import InfoDialog from "../Dialog/Dialog";
 import Filters from "../Filters/Filters";
 import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useDbData } from "../../utilities/firebase";
+import { useDbData, useAuth } from "../../utilities/firebase";
 
 const Feed = ({ posts }) => {
   const navigate = useNavigate();
   const [userData, error] = useDbData("/users");
+  const [user] = useAuth();
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    if (typeof userData !== "undefined") {
+      const userInfo = userData[user.uid];
+      const coursesString = userInfo.courses;
+      setCourses(coursesString.split(", "));
+    }
+  }, [userData]);
 
   const [contact, SetContact] = useState({});
   const [availability, SetAvailability] = useState("");
   const [openContact, setOpenContact] = useState(false);
 
-  const handleClickOpenContact = post_item => {
-    console.log(post_item, userData[post_item.user_id])
+  const handleClickOpenContact = (post_item) => {
+    console.log(post_item, userData[post_item.user_id]);
     const contact_email = userData[post_item.user_id].email;
     const contact_phone = userData[post_item.user_id].phoneNumber;
-    SetContact({"email": contact_email, "phone_number": contact_phone})
+    SetContact({ email: contact_email, phone_number: contact_phone });
     setOpenContact(true);
   };
 
@@ -34,7 +44,7 @@ const Feed = ({ posts }) => {
 
   const [openAvailability, setOpenAvailability] = useState(false);
 
-  const handleClickOpenAvailability = post_item => {
+  const handleClickOpenAvailability = (post_item) => {
     const contact_availability = userData[post_item.user_id].availability;
     SetAvailability(contact_availability);
     setOpenAvailability(true);
@@ -78,9 +88,9 @@ const Feed = ({ posts }) => {
         <AvailabilityModal availability={availability} />
       </InfoDialog>
       <Filters
-        course={course}
+        courses={courses}
+        setCourses={setCourses}
         setCourse={setCourse}
-        mode={mode}
         setMode={setMode}
       />
 
@@ -95,6 +105,7 @@ const Feed = ({ posts }) => {
           {posts &&
             Object.values(posts)
               .sort((postOne, postTwo) => postTwo.time - postOne.time)
+              .filter((post) => courses.includes(post.course))
               .filter((post) =>
                 course !== "All" ? post.course === course : true
               )
@@ -104,7 +115,9 @@ const Feed = ({ posts }) => {
                   key={index}
                   post={item}
                   handleOpenContact={() => handleClickOpenContact(item)}
-                  handleOpenAvailability={() => handleClickOpenAvailability(item)}
+                  handleOpenAvailability={() =>
+                    handleClickOpenAvailability(item)
+                  }
                 />
               ))}
         </Stack>
