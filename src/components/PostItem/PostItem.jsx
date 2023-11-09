@@ -51,11 +51,11 @@ export const PostItem = ({
       <div className="post-header">
         <h2 className="post-description">{post.title}</h2>
         <div className="post-user">
-            <Avatar sx={{ width: 30, height: 30, marginBottom: '.5rem'}} src={post.userImage ? post.userImage : ''}></Avatar>
-            <div style={{marginLeft: "10px", marginRight: "10px"}}>
+            <Avatar sx={{ width: 25, height: 25, marginBottom: '.5rem'}} src={post.userImage ? post.userImage : ''}></Avatar>
+            <div style={{marginLeft: "5px", marginRight: "10px"}}>
               {post.userName ? post.userName : 'Anonymous'}
             </div>
-            {calculateTimeAgo(post.time)}
+            {calculateTimeAgo(post.time)} ago
         </div>
       </div>
       <Chip className="post-course" size="small" label={post.course} />
