@@ -6,8 +6,7 @@ import { useAuth } from "../../utilities/firebase";
 
 import Form from "react-bootstrap/Form";
 
-function Filters({ course, setCourse, mode, setMode }) {
-  const [courses, setCourses] = useState([]);
+function Filters({ courses, setCourses, setCourse, setMode }) {
   const [user] = useAuth();
   const [users, result] = useDbData("/users");
 
