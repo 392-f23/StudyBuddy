@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, TextField, Button, Alert } from "@mui/material";
+import { Stack, TextField, Button, Alert, IconButton } from "@mui/material";
 import { useState, useEffect } from "react";
 import Banner from "../Banner/Banner";
 import { useDbUpdate, useDbData } from "../../utilities/firebase";
@@ -7,6 +7,11 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import dayjs from "dayjs";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import { DeleteOutline } from "@mui/icons-material";
 
 export const PostForm = () => {
   const auth = getAuth();
@@ -46,8 +51,78 @@ export const PostForm = () => {
 
   const navigate = useNavigate();
 
+
+  const [availabilityDate, setAvailabilityDate] = useState();
+  const [availabilityStartTime, setAvailabilityStartTime] = useState();
+  const [availabilityEndTime, setAvailabilityEndTime] = useState();
+  const [availabilityTimeList, setAvailabilityTimeList] = useState([]);
+
+  const AvailabilityListItem = ({ date, startTime, endTime, onClick }) => (
+    <Stack
+      direction="row"
+      alignItems="center"
+      gap={2}
+      justifyContent="space-between"
+    >
+      <div>
+        {date} at {dayjs(startTime).format("hh:mm A")}-
+        {dayjs(endTime).format("hh:mm A")}
+      </div>
+      <IconButton onClick={() => onClick(date, startTime, endTime)}>
+        <DeleteOutline />
+      </IconButton>
+    </Stack>
+  );
+
+  const addDateTime = () => {
+
+    console.log(availabilityTimeList)
+    if ((availabilityStartTime, availabilityEndTime, availabilityDate)) {
+      setAvailabilityTimeList([
+        ...availabilityTimeList,
+        {
+          date: dayjs(availabilityDate).format("ddd, MMM D"),
+          start_time:  availabilityStartTime,
+          end_time: availabilityEndTime,
+        },
+      ]);
+      setAvailabilityDate();
+      setAvailabilityStartTime();
+      setAvailabilityEndTime();
+    }
+  };
+
+  const removeDateTime = (
+    availabilityDate,
+    availabilityStartTime,
+    availabilityEndTime
+  ) => {
+    const infoToRemove = {
+      date: availabilityDate,
+      start_time: availabilityStartTime,
+      end_time: availabilityEndTime,
+    };
+    // Use the filter function to create a new array with the item removed
+    const updatedAvailabilityTimeList = availabilityTimeList.filter((info) => {
+      // Compare the properties of the 'info' object with 'infoToRemove' to check for equality
+      return (
+        info.date !== infoToRemove.date ||
+        info.start_time !== infoToRemove.start_time ||
+        info.end_time !== infoToRemove.end_time
+      );
+    });
+    // Update the 'availabilityTimeList' state with the new array
+    setAvailabilityTimeList(updatedAvailabilityTimeList);
+  };
+
+
+
   const submitPost = () => {
     setShowAlert(true);
+
+    let avalabilityListCopy = [...availabilityTimeList];
+    avalabilityListCopy = avalabilityListCopy.map(x => {return {...x, start_time: dayjs(x.start_ime).format("hh:mm A"), end_time: dayjs(x.end_ime).format("hh:mm A")}})
+
 
     const postUUID = uuidv4();
 
@@ -58,6 +133,7 @@ export const PostForm = () => {
       course: course,
       location: location,
       user_id: uid,
+      availability: avalabilityListCopy
     };
 
     updatePosts({ [postUUID]: post });
@@ -73,17 +149,12 @@ export const PostForm = () => {
       courseData.posts.push(postUUID);
       updateCourseData(courseData);
     }
-
-    // // check for when the course ID is not already in the DB
-    // if (!Object.keys(allCourses).includes(course)) {
-    //   console.log("not in data");
-    // }
-
     navigate("/");
   };
 
+
   return (
-    <Stack spacing={3} style={{ padding: 20 }}>
+    <Stack spacing={3} style={{ padding: 20, marginBottom: 100 }}>
       <h2>Make a post</h2>
 
       {showAlert && (
@@ -129,7 +200,42 @@ export const PostForm = () => {
         variant="outlined"
       />
 
-      <TextField
+      <h3>Availability</h3>
+
+      {availabilityTimeList.map((x, index) => (
+        <AvailabilityListItem
+          key={index}
+          startTime={x.start_time}
+          endTime={x.end_time}
+          date={x.date}
+          onClick={() => removeDateTime(x.date, x.start_time, x.end_time)}
+        />
+      ))}
+
+      <DatePicker
+        label="Date"
+        onChange={(value) => setAvailabilityDate(new Date(value))}
+        value={availabilityDate}
+      />
+
+      <Stack direction="row" gap={2}>
+        <TimePicker
+          views={["hours", "minutes"]}
+          onChange={(value) => setAvailabilityStartTime(value)}
+          value={availabilityStartTime}
+          label="Start time"
+        />
+        <TimePicker
+          views={["hours", "minutes"]}
+          onChange={(value) => setAvailabilityEndTime(value)}
+          value={availabilityEndTime}
+          label="End time"
+        />
+      </Stack>
+
+      <Button onClick={addDateTime}>Add</Button>
+
+      {/* <TextField
         onChange={(e) => setAvailability(e.target.value)}
         defaultValue={availability}
         id="outlined-basic-avail"
@@ -138,7 +244,7 @@ export const PostForm = () => {
         placeholder='Meeting Availibility (list availible time slots in this format: "MWF 05:00-07:00 pm, TuTh 10:00-11:00 am")'
         multiline
         rows={3}
-      />
+      /> */}
 
       <Button onClick={submitPost} variant="contained">
         Create
