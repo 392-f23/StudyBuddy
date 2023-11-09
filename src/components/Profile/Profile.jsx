@@ -117,7 +117,7 @@ const Profile = () => {
   return (
     <Container maxWidth="sm">
       <Stack className="main">
-        <Avatar sx={{ width: 60, height: 60, marginBottom: '.5rem'}}></Avatar>
+      <Avatar sx={{ width: 60, height: 60, marginBottom: '.5rem'}} src={userData ? userData.photoURL : ''}></Avatar>
         <Grid container justifyContent="space-evenly">
           <h3>{userDisplayName}</h3>
           { editing ?

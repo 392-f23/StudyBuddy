@@ -133,7 +133,9 @@ export const PostForm = () => {
       course: course,
       location: location,
       user_id: uid,
-      availability: avalabilityListCopy
+      availability: avalabilityListCopy,
+      userImage: userData.photoURL,
+      userName: userData.displayName
     };
 
     updatePosts({ [postUUID]: post });
