@@ -1,10 +1,24 @@
 import { FormControl, Select, InputLabel, MenuItem } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Filters.css";
+import { useDbData } from "../../utilities/firebase";
+import { useAuth } from "../../utilities/firebase";
 
 import Form from "react-bootstrap/Form";
 
 function Filters({ course, setCourse, mode, setMode }) {
+  const [courses, setCourses] = useState([]);
+  const [user] = useAuth();
+  const [users, result] = useDbData("/users");
+
+  useEffect(() => {
+    if (typeof users !== "undefined") {
+      const userInfo = users[user.uid];
+      const coursesString = userInfo.courses;
+      setCourses(coursesString.split(", "));
+    }
+  }, [users]);
+
   const changeCourse = (event) => {
     setCourse(event.target.value);
   };
@@ -12,8 +26,6 @@ function Filters({ course, setCourse, mode, setMode }) {
   const changeMode = (event) => {
     setMode(event.target.value);
   };
-
-  const courses = ["CHEM 151", "MATH 250", "COMP_SCI 392", "COMP_SCI 330"];
 
   return (
     <div className="filters">
