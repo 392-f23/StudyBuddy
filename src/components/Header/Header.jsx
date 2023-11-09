@@ -1,7 +1,12 @@
 import "./Header.css";
 
 const Header = () => {
-  return <h1 className="header">StudyBuddy</h1>;
+  return (
+    <div className="header">
+      <h1>StudyBuddy</h1>
+      <img className="logoimgbanner" src="../../../sb_logo.png" />
+    </div>
+  );
 };
 
 export default Header;
