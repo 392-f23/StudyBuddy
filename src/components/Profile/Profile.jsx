@@ -132,7 +132,7 @@ const Profile = () => {
   const style = {
     width: "100%",
     maxWidth: "20rem",
-    bgcolor: "background.paper",
+    // bgcolor: "background.paper",
     borderRadius: "4px",
     margin: "0.5rem 0",
     padding: "0",
@@ -150,7 +150,6 @@ const Profile = () => {
   return (
     <Container maxWidth="sm">
       <Stack className="main">
-        {/* <Grid container justifyContent="space-evenly"> */}
         <div className="profile-header">
           <Avatar
             className="profile-pic"
@@ -181,9 +180,8 @@ const Profile = () => {
             Save
           </Button>
         )}
-        {/* </Grid> */}
         <Container sx={style}>
-          <FormControl variant="filled" sx={{ width: "100%" }}>
+          <FormControl variant="filled" className="profile-field">
             <InputLabel id="simple-select">Graduation Year</InputLabel>
             <Select
               labelId="simple-select"
@@ -201,6 +199,7 @@ const Profile = () => {
             </Select>
           </FormControl>
           <MuiTelInput
+            className="profile-field"
             inputProps={{ readOnly: editing, label: "Phone Number" }}
             variant="filled"
             sx={{ width: "100%" }}
@@ -210,6 +209,7 @@ const Profile = () => {
           />
 
           <Autocomplete
+            className="profile-field"
             // id="tags-filled"
             onChange={handleChangeMajor}
             options={[
@@ -235,7 +235,7 @@ const Profile = () => {
               />
             )}
           />
-          <FormControl variant="filled" sx={{ width: "100%" }}>
+          <FormControl variant="filled" className="profile-field">
             <InputLabel id="simple-select">Mode Preference</InputLabel>
             <Select
               labelId="simple-select"
@@ -248,7 +248,7 @@ const Profile = () => {
               <MenuItem value={"In-person"}>In-person</MenuItem>
             </Select>
           </FormControl>
-          <FormControl variant="filled" sx={{ width: "100%" }}>
+          <FormControl variant="filled" className="profile-field">
             <InputLabel id="simple-select">Profile Type</InputLabel>
             <Select
               labelId="demo-simple-select-helper-label"
