@@ -22,8 +22,10 @@ const Feed = ({ posts }) => {
     if (typeof userData !== "undefined") {
       const userInfo = userData[user.uid];
       const coursesString = userInfo.courses;
-      setCourses(coursesString.split(", "));
+      setCourses(coursesString);
     }
+
+
   }, [userData]);
 
   const [contact, SetContact] = useState({});
@@ -45,8 +47,12 @@ const Feed = ({ posts }) => {
   const [openAvailability, setOpenAvailability] = useState(false);
 
   const handleClickOpenAvailability = (post_item) => {
-    const contact_availability = userData[post_item.user_id].availability;
-    SetAvailability(contact_availability);
+    let availabilityArr = post_item.availability
+    console.log(availabilityArr)
+    if (availabilityArr){
+      availabilityArr = availabilityArr.map(x=> `${x.date} ${x.start_time} - ${x.end_time}`)
+    }
+    SetAvailability(availabilityArr || ["Not Provided"]);
     setOpenAvailability(true);
   };
 

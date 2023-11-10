@@ -10,20 +10,35 @@ import {
   Radio,
   MenuItem,
   Alert,
+  OutlinedInput,
+  Box,
+  Chip,
 } from "@mui/material";
 import "./SignUp.css";
-import { useState } from "react";
-import { useAuth } from "../../utilities/firebase";
+import { useEffect, useState } from "react";
+import { useAuth, useDbData } from "../../utilities/firebase";
 import { useDbUpdate } from "../../utilities/firebase";
 import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 
 export const SignUp = () => {
+  const [coursesFromDB, result3] = useDbData("/courses");
+  const [setupCourses, setSetupCourses] = useState([]);
+
+  useEffect(() => {
+    if (coursesFromDB) {
+      setSetupCourses(Object.keys(coursesFromDB).slice(700,900));
+    }
+  }, [coursesFromDB]);
+  
+
   const [year, setYear] = useState("");
   const [major, setMajor] = useState("");
   const [mode, setMode] = useState("");
   const [profileType, setProfileType] = useState("");
   const [number, setNumber] = useState("");
-  const [courses, setCourses] = useState("");
+  const [courses, setCourses] = useState([]);
   const [availability, setAvailability] = useState("");
 
   const [showAlert, setShowAlert] = useState(false);
@@ -37,8 +52,7 @@ export const SignUp = () => {
       major === "" ||
       mode === "" ||
       profileType === "" ||
-      courses === "" ||
-      availability === ""
+      courses === ""
     ) {
       setShowAlert(true);
       return;
@@ -54,7 +68,6 @@ export const SignUp = () => {
       profileType: profileType,
       phoneNumber: number,
       courses: courses,
-      availability: availability,
     };
 
     updateUsers({ [user.uid]: userData });
@@ -62,6 +75,18 @@ export const SignUp = () => {
     setShowAlert(false);
     navigate("/feed");
   };
+
+
+  const handleCoursesChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setCourses(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
 
   return (
     <Stack spacing={3} style={{ padding: 20 }}>
@@ -117,27 +142,30 @@ export const SignUp = () => {
         </Select>
       </FormControl>
 
-      <TextField
-        onChange={(e) => setCourses(e.target.value)}
-        value={courses}
-        id="outlined-basic"
-        variant="outlined"
-        required
-        placeholder='Courses (list 1-5 in this format: "CHEM 151, MATH 250, COMP_SCI 392, COMP_SCI 330")'
-        multiline
-        rows={4}
-      />
-
-      <TextField
-        onChange={(e) => setAvailability(e.target.value)}
-        value={availability}
-        id="outlined-basic"
-        variant="outlined"
-        required
-        placeholder='Default Availability (list availible time slots in this format: "MWF 05:00-07:00 pm, TuTh 10:00-11:00 am")'
-        multiline
-        rows={2}
-      />
+      <FormControl fullWidth>
+        <InputLabel id="demo-multiple-name-label">Courses</InputLabel>
+        <Select
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          multiple
+          value={courses}
+          onChange={handleCoursesChange}
+          input={<OutlinedInput label="Name" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+        >
+          {setupCourses.map((name) => (
+            <MenuItem key={name} value={name}>
+              {name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       <TextField
         onChange={(e) => setNumber(e.target.value)}
@@ -147,6 +175,7 @@ export const SignUp = () => {
         variant="outlined"
         required
       />
+
 
       <Button onClick={submitForm} variant="contained">
         Submit

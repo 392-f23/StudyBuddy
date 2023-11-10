@@ -14,7 +14,7 @@ function Filters({ courses, setCourses, setCourse, setMode }) {
     if (typeof users !== "undefined") {
       const userInfo = users[user.uid];
       const coursesString = userInfo.courses;
-      setCourses(coursesString.split(", "));
+      setCourses(coursesString);
     }
   }, [users]);
 
