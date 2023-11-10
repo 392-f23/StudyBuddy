@@ -31,6 +31,16 @@ import { useDbData,useDbUpdate} from "../../utilities/firebase";
 const Profile = () => {
   const auth = getAuth();
   const [uid, setUid] = useState("");
+  const [coursesFromDB, result3] = useDbData("/courses");
+  const [setupCourses, setSetupCourses] = useState([]);
+
+  useEffect(() => {
+    if (coursesFromDB) {
+      setSetupCourses(Object.keys(coursesFromDB).slice(700,900));
+    }
+  }, [coursesFromDB]);
+
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -42,7 +52,7 @@ const Profile = () => {
     return () => unsubscribe();
   }, []);
   const [userData, setUserData] = useDbData("/users/" + uid);
-  console.log(userData)
+  // console.log(userData)
   const [updateData,result]=useDbUpdate("/users/" + uid);
   const navigate = useNavigate();
 
@@ -63,6 +73,7 @@ const Profile = () => {
 
   const [mode, setMode] = React.useState("");
   const handleChangeMode = (event) => {
+
     setMode(event.target.value);
   };
 
@@ -72,15 +83,13 @@ const Profile = () => {
   };
 
   const [major, setMajor] = React.useState("");
-  const handleChangeMajor = (event) => {
-    setMajor(event.target.value);
+  const handleChangeMajor = (event, value) => {
+    setMajor(value);
   };
 
   const [courses, setCourses] = React.useState([""]);
-  const handleChangeCourses = (event) => {
-    //console.log("Handling Change:");
-    //console.log(event.target.value);
-    setCourses(event.target.value);
+  const handleChangeCourses = (event, value) => {
+    setCourses(value);
   };
 
   const [userDisplayName, setUserDisplayName] = React.useState("");
@@ -90,10 +99,9 @@ const Profile = () => {
       setYear(userData.year);
       setPhone(userData.phoneNumber);
       setMajor(userData.major);
-      console.log(major);
       setMode(userData.mode);
       setView(userData.profileType);
-      setCourses(userData.courses.split(", "));
+      setCourses(userData.courses);
       setUserDisplayName(userData.displayName);
     }
   }, [userData]);
@@ -119,7 +127,7 @@ const Profile = () => {
         mode:mode,
         major: major,
         profileType:view,
-        courses:courses.join(", ")
+        courses:courses
     }
     updateData(newstate);
     console.log(result);
@@ -142,6 +150,8 @@ const Profile = () => {
     marginBottom: "0.5rem",
     marginTop: "0"
   };
+
+
 
   return (
     <Container maxWidth="sm">
@@ -198,11 +208,12 @@ const Profile = () => {
             value={phone}
             onChange={handleChangePhone}
           />
+
+
           <Autocomplete
-            id="tags-filled"
+            // id="tags-filled"
             onChange={handleChangeMajor}
             options={[
-              "",
               "Anthropology",
               "Art History",
               "Biology",
@@ -212,12 +223,13 @@ const Profile = () => {
               "Literature",
               "Math",
             ]}
+           
             getOptionLabel={(option) => option}
             filterSelectedOptions
             readOnly={editing}
             value={major}
             renderInput={(params) => (
-              <TextField variant="filled" label="Major" {...params} />
+              <TextField  className="text-class" variant="filled" label="Major" {...params} />
             )}
           />
           <FormControl variant="filled" sx={{ width: "100%" }}>
@@ -256,19 +268,9 @@ const Profile = () => {
           multiple
           id="tags-outlined"
           onChange={handleChangeCourses}
-          options={[
-            "",
-            "CHEM 151",
-            "CHEM 152",
-            "CS211",
-            "CS212",
-            "CS213",
-            "CS392",
-            "CS348",
-            "CS349",
-          ]}
+          options={setupCourses}
           getOptionLabel={(option) => option}
-          filterSelectedOptions
+          // filterSelectedOptions
           readOnly={editing}
           value={courses}
           renderInput={(params) => (
