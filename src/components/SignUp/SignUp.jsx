@@ -150,6 +150,7 @@ export const SignUp = () => {
           multiple
           value={courses}
           onChange={handleCoursesChange}
+          MenuProps={{ style: {maxHeight: 400 }}}
           input={<OutlinedInput label="Name" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
