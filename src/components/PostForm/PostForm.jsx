@@ -197,7 +197,7 @@ export const PostForm = () => {
         onChange={(e) => setLocation(e.target.value)}
         value={location}
         id="outlined-basic-loca"
-        label="Location"
+        label="Location (type 'Remote' for virtual meetings)"
         variant="outlined"
       />
 
