@@ -26,7 +26,7 @@ import { MuiTelInput } from "mui-tel-input"; //https://www.npmjs.com/package/mui
 import { FirebaseSignOut } from "../../utilities/firebase";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useDbData } from "../../utilities/firebase";
+import { useDbData,useDbUpdate} from "../../utilities/firebase";
 
 const Profile = () => {
   const auth = getAuth();
@@ -42,8 +42,8 @@ const Profile = () => {
     return () => unsubscribe();
   }, []);
   const [userData, setUserData] = useDbData("/users/" + uid);
-  //console.log(userData)
-
+  console.log(userData)
+  const [updateData,result]=useDbUpdate("/users/" + uid);
   const navigate = useNavigate();
 
   const signOut = () => {
@@ -98,6 +98,8 @@ const Profile = () => {
     }
   }, [userData]);
 
+  
+
   const [editing, setEditing] = useState(true);
 
   const enableEditingView = () => {
@@ -109,6 +111,18 @@ const Profile = () => {
   const enableSave = () => {
     setSave(false);
     setEditing(true);
+    console.log(year,phone, mode,major,view, courses);
+    
+    const newstate={
+        year: year,
+        phoneNumber:phone,
+        mode:mode,
+        major: major,
+        profileType:view,
+        courses:courses.join(", ")
+    }
+    updateData(newstate);
+    console.log(result);
   };
 
   const style = {
