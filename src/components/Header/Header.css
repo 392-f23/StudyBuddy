@@ -1,5 +1,7 @@
 .header {
+    display: flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
     color: white;
     background-color: #4E2A84;
@@ -7,9 +9,9 @@
     padding: 0;
     height: 4rem;
     line-height: 4rem;
-    display: flex;
 }
 
 .logoimgbanner {
     padding: .5rem;
+    height: 3rem;
 }
