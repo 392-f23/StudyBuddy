@@ -182,12 +182,12 @@ const Profile = () => {
         </Grid>
         <Container sx={style}>
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="demo-simple-select-label">
+            <InputLabel id="simple-select">
               Graduation Year
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="simple-select"
+              id="simple-select-field"
               value={year}
               onChange={handleChangeYear}
               inputProps={{ readOnly: editing }}
@@ -233,12 +233,12 @@ const Profile = () => {
             )}
           />
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="demo-simple-select-label">
+            <InputLabel id="simple-select">
               Mode Preference
             </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="simple-select"
+              id="simple-select-field"
               value={mode}
               onChange={handleChangeMode}
               inputProps={{ readOnly: editing }}
@@ -248,12 +248,12 @@ const Profile = () => {
             </Select>
           </FormControl>
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="demo-simple-select-label">
+            <InputLabel id="simple-select">
               Profile Type
             </InputLabel>
             <Select
               labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
+              id="simple-select-field"
               value={view}
               onChange={handleChangeView}
               inputProps={{ readOnly: editing }}
