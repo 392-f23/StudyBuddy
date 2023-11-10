@@ -33,7 +33,7 @@ export const PostForm = () => {
   useEffect(() => {
     if (typeof userData !== "undefined") {
       setAvailability(userData.availability);
-      setCourses(userData.courses.split(", "));
+      setCourses(userData.courses);
     }
   }, [userData]);
 
@@ -121,9 +121,7 @@ export const PostForm = () => {
     setShowAlert(true);
 
     let avalabilityListCopy = [...availabilityTimeList];
-    avalabilityListCopy = avalabilityListCopy.map(x => {return {...x, start_time: dayjs(x.start_ime).format("hh:mm A"), end_time: dayjs(x.end_ime).format("hh:mm A")}})
-
-
+    avalabilityListCopy = avalabilityListCopy.map(x => {return {...x, start_time: dayjs(x.start_time).format("hh:mm A"), end_time: dayjs(x.end_time).format("hh:mm A")}})
     const postUUID = uuidv4();
 
     const post = {
@@ -143,7 +141,7 @@ export const PostForm = () => {
     // if the course does not currently have any posts
     if (!Object.hasOwn(courseData, "posts")) {
       const newCourseData = {
-        course_name: courseData.course_name,
+        id: courseData.id,
         posts: [postUUID],
       };
       updateCourseData(newCourseData);
@@ -152,6 +150,7 @@ export const PostForm = () => {
       updateCourseData(courseData);
     }
     navigate("/");
+
   };
 
 
@@ -236,17 +235,6 @@ export const PostForm = () => {
       </Stack>
 
       <Button onClick={addDateTime}>Add</Button>
-
-      {/* <TextField
-        onChange={(e) => setAvailability(e.target.value)}
-        defaultValue={availability}
-        id="outlined-basic-avail"
-        variant="outlined"
-        required
-        placeholder='Meeting Availibility (list availible time slots in this format: "MWF 05:00-07:00 pm, TuTh 10:00-11:00 am")'
-        multiline
-        rows={3}
-      /> */}
 
       <Button onClick={submitPost} variant="contained">
         Create
