@@ -116,15 +116,24 @@ const Profile = () => {
     maxWidth: "20rem",
     bgcolor: "background.paper",
     borderRadius: "4px",
-    marginBottom: "1rem",
-    marginTop: "1rem",
+    margin: '0.5rem 0',
+    padding: '0'
+  };
+
+  const style2 = {
+    width: "100%",
+    maxWidth: "20rem",
+    bgcolor: "background.paper",
+    borderRadius: "4px",
+    marginBottom: "0.5rem",
+    marginTop: "0"
   };
 
   return (
     <Container maxWidth="sm">
       <Stack className="main">
         <Avatar
-          sx={{ width: 60, height: 60, marginBottom: ".5rem" }}
+          sx={{ width: 50, height: 50, marginBottom: ".5rem", marginTop: '-2rem'}}
           src={userData ? userData.photoURL : ""}
         ></Avatar>
         <Grid container justifyContent="space-evenly">
@@ -147,160 +156,89 @@ const Profile = () => {
             </Button>
           )}
         </Grid>
-        <List sx={style}>
-          <ListItem divider>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                  >
-                    <FormControl variant="filled" sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-label">
-                        Graduation Year
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={year}
-                        onChange={handleChangeYear}
-                        inputProps={{ readOnly: editing }}
-                      >
-                        <MenuItem value={"2023"}>2023</MenuItem>
-                        <MenuItem value={"2024"}>2024</MenuItem>
-                        <MenuItem value={"2025"}>2025</MenuItem>
-                        <MenuItem value={"2026"}>2026</MenuItem>
-                        <MenuItem value={"2027"}>2027</MenuItem>
-                        <MenuItem value={"Other"}>Other</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ width: "100%" }}
-                    component="span"
-                    variant="body2"
-                  >
-                    <MuiTelInput
-                      inputProps={{ readOnly: editing, label: "Phone Number" }}
-                      variant="filled"
-                      sx={{ width: "100%" }}
-                      defaultCountry="us"
-                      value={phone}
-                      onChange={handleChangePhone}
-                    />
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                  >
-                    <Autocomplete
-                      sx={style}
-                      id="tags-filled"
-                      onChange={handleChangeMajor}
-                      options={[
-                        "",
-                        "Anthropology",
-                        "Art History",
-                        "Biology",
-                        "Computer Science",
-                        "Geology",
-                        "History",
-                        "Literature",
-                        "Math",
-                      ]}
-                      getOptionLabel={(option) => option}
-                      filterSelectedOptions
-                      readOnly={editing}
-                      value={major}
-                      renderInput={(params) => (
-                        <TextField variant="filled" label="Major" {...params} />
-                      )}
-                    />
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem divider>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                  >
-                    <FormControl variant="filled" sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-label">
-                        Mode Preference
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={mode}
-                        onChange={handleChangeMode}
-                        inputProps={{ readOnly: editing }}
-                      >
-                        <MenuItem value={"Remote"}>Remote</MenuItem>
-                        <MenuItem value={"In-person"}>In-person</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    sx={{ display: "inline" }}
-                    component="span"
-                    variant="body2"
-                  >
-                    <FormControl variant="filled" sx={{ width: "100%" }}>
-                      <InputLabel id="demo-simple-select-label">
-                        Profile Type
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-helper-label"
-                        id="demo-simple-select-helper"
-                        value={view}
-                        onChange={handleChangeView}
-                        inputProps={{ readOnly: editing }}
-                      >
-                        <MenuItem value={"Public"}>Public View</MenuItem>
-                        <MenuItem value={"Anonymous"}>Anonymous</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        </List>
+        <Container sx={style}>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="demo-simple-select-label">
+              Graduation Year
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={year}
+              onChange={handleChangeYear}
+              inputProps={{ readOnly: editing }}
+            >
+              <MenuItem value={"2023"}>2023</MenuItem>
+              <MenuItem value={"2024"}>2024</MenuItem>
+              <MenuItem value={"2025"}>2025</MenuItem>
+              <MenuItem value={"2026"}>2026</MenuItem>
+              <MenuItem value={"2027"}>2027</MenuItem>
+              <MenuItem value={"Other"}>Other</MenuItem>
+            </Select>
+          </FormControl>
+          <MuiTelInput
+            inputProps={{ readOnly: editing, label: "Phone Number" }}
+            variant="filled"
+            sx={{ width: "100%" }}
+            defaultCountry="us"
+            value={phone}
+            onChange={handleChangePhone}
+          />
+          <Autocomplete
+            id="tags-filled"
+            onChange={handleChangeMajor}
+            options={[
+              "",
+              "Anthropology",
+              "Art History",
+              "Biology",
+              "Computer Science",
+              "Geology",
+              "History",
+              "Literature",
+              "Math",
+            ]}
+            getOptionLabel={(option) => option}
+            filterSelectedOptions
+            readOnly={editing}
+            value={major}
+            renderInput={(params) => (
+              <TextField variant="filled" label="Major" {...params} />
+            )}
+          />
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="demo-simple-select-label">
+              Mode Preference
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={mode}
+              onChange={handleChangeMode}
+              inputProps={{ readOnly: editing }}
+            >
+              <MenuItem value={"Remote"}>Remote</MenuItem>
+              <MenuItem value={"In-person"}>In-person</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl variant="filled" sx={{ width: "100%" }}>
+            <InputLabel id="demo-simple-select-label">
+              Profile Type
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              value={view}
+              onChange={handleChangeView}
+              inputProps={{ readOnly: editing }}
+            >
+              <MenuItem value={"Public"}>Public View</MenuItem>
+              <MenuItem value={"Anonymous"}>Anonymous</MenuItem>
+            </Select>
+          </FormControl>
+        </Container>
         <Autocomplete
-          sx={style}
+          sx={style2}
           multiple
           id="tags-outlined"
           onChange={handleChangeCourses}
