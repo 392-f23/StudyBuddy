@@ -11,6 +11,7 @@ import Filters from "../Filters/Filters";
 import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDbData, useAuth } from "../../utilities/firebase";
+import ProfileModal from "../ProfileModal/ProfileModal";
 
 const Feed = ({ posts }) => {
   const navigate = useNavigate();
@@ -24,16 +25,16 @@ const Feed = ({ posts }) => {
       const coursesString = userInfo.courses;
       setCourses(coursesString);
     }
-
-
   }, [userData]);
 
   const [contact, SetContact] = useState({});
   const [availability, SetAvailability] = useState("");
+  const [profile, setProfile] = useState("");
   const [openContact, setOpenContact] = useState(false);
+  const [openAvailability, setOpenAvailability] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   const handleClickOpenContact = (post_item) => {
-    console.log(post_item, userData[post_item.user_id]);
     const contact_email = userData[post_item.user_id].email;
     const contact_phone = userData[post_item.user_id].phoneNumber;
     SetContact({ email: contact_email, phone_number: contact_phone });
@@ -44,13 +45,12 @@ const Feed = ({ posts }) => {
     setOpenContact(false);
   };
 
-  const [openAvailability, setOpenAvailability] = useState(false);
-
   const handleClickOpenAvailability = (post_item) => {
-    let availabilityArr = post_item.availability
-    console.log(availabilityArr)
-    if (availabilityArr){
-      availabilityArr = availabilityArr.map(x=> `${x.date} ${x.start_time} - ${x.end_time}`)
+    let availabilityArr = post_item.availability;
+    if (availabilityArr) {
+      availabilityArr = availabilityArr.map(
+        (x) => `${x.date} ${x.start_time} - ${x.end_time}`
+      );
     }
     SetAvailability(availabilityArr || ["Not Provided"]);
     setOpenAvailability(true);
@@ -58,6 +58,19 @@ const Feed = ({ posts }) => {
 
   const handleCloseAvailability = () => {
     setOpenAvailability(false);
+  };
+
+  const handleClickOpenProfile = (post_item) => {
+    const poster = userData[post_item.user_id];
+    const year = poster.year;
+    const major = poster.major;
+    const mode = poster.mode;
+    setProfile({ year: year, major: major, mode: mode });
+    setOpenProfile(true);
+  };
+
+  const handleCloseProfile = () => {
+    setOpenProfile(false);
   };
 
   const [course, setCourse] = useState("All");
@@ -93,6 +106,13 @@ const Feed = ({ posts }) => {
       >
         <AvailabilityModal availability={availability} />
       </InfoDialog>
+      <InfoDialog
+        title={"Profile"}
+        open={openProfile}
+        handleClose={handleCloseProfile}
+      >
+        <ProfileModal profile={profile} />
+      </InfoDialog>
       <Filters
         courses={courses}
         setCourses={setCourses}
@@ -124,6 +144,7 @@ const Feed = ({ posts }) => {
                   handleOpenAvailability={() =>
                     handleClickOpenAvailability(item)
                   }
+                  handleOpenProfile={() => handleClickOpenProfile(item)}
                 />
               ))}
         </Stack>

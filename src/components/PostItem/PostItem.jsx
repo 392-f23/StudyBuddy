@@ -6,6 +6,7 @@ export const PostItem = ({
   post,
   handleOpenContact,
   handleOpenAvailability,
+  handleOpenProfile,
 }) => {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -60,7 +61,12 @@ export const PostItem = ({
             src={post.userImage ? post.userImage : ""}
           ></Avatar>
           <div style={{ marginLeft: "5px", marginRight: "10px" }}>
-            {post.userName ? post.userName : "Anonymous"}
+            <Button
+              style={{ padding: "0", textTransform: "capitalize" }}
+              onClick={handleOpenProfile}
+            >
+              {post.userName ? post.userName : "Anonymous"}
+            </Button>
           </div>
         </div>
       </div>
