@@ -138,14 +138,15 @@ const Profile = () => {
     padding: "0",
   };
 
-  const style2 = {
-    width: "100%",
-    maxWidth: "20rem",
-    bgcolor: "background.paper",
-    borderRadius: "4px",
-    marginBottom: "0.5rem",
-    marginTop: "0",
-  };
+  const styles = {
+    style2 : {
+      width: "100%",
+      maxWidth: "20rem",
+      bgcolor: "background.paper",
+      borderRadius: "5px",
+      marginBottom: "0.5rem",
+      marginTop: "0",
+  }};
 
   return (
     <Container maxWidth="sm">
@@ -154,17 +155,21 @@ const Profile = () => {
           <Avatar
             className="profile-pic"
             sx={{
-              width: 50,
-              height: 50,
-              marginBottom: ".5rem",
-              marginTop: "-2rem",
+              width: 40,
+              height: 40
+            ,
+              marginBottom: ".2rem",
+              marginTop: "-3rem",
             }}
             src={userData ? userData.photoURL : ""}
           ></Avatar>
-          <h3>{userDisplayName}</h3>
         </div>
+        <div>
+        {userDisplayName}
+        {"   "}
         {editing ? (
           <Button
+            size="small"
             variant="outlined"
             onClick={enableEditingView}
             startIcon={<EditIcon />}
@@ -173,14 +178,16 @@ const Profile = () => {
           </Button>
         ) : (
           <Button
-            variant="outlined"
+            size="small"
+            variant="contained"
             onClick={enableSave}
             startIcon={<SaveIcon />}
           >
             Save
           </Button>
         )}
-        <Container sx={style}>
+        </div>
+        <Container sx={style} >
           <FormControl variant="filled" className="profile-field">
             <InputLabel id="simple-select">Graduation Year</InputLabel>
             <Select
@@ -263,8 +270,9 @@ const Profile = () => {
           </FormControl>
         </Container>
         <Autocomplete
-          sx={style2}
+          sx={styles.style2}
           multiple
+          size="small"
           id="tags-outlined"
           onChange={handleChangeCourses}
           options={setupCourses}
