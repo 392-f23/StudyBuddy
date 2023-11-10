@@ -14,6 +14,7 @@ import {
 import * as React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
+import CloseIcon from '@mui/icons-material/Close';
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import { useState, useEffect } from "react";
@@ -104,17 +105,23 @@ const Profile = () => {
     }
   }, [userData]);
 
-  const [editing, setEditing] = useState(true);
+  const [canClickEdit, setCanClickEdit] = useState(true);
 
   const enableEditingView = () => {
-    setEditing(false);
+    setCanClickEdit(false);
   };
 
   const [save, setSave] = useState(true);
 
+  const cancelEdit = () => {
+    setSave(false);
+    setCanClickEdit(true);
+    window.location.reload(false); //jank but works for now
+  }
+
   const enableSave = () => {
     setSave(false);
-    setEditing(true);
+    setCanClickEdit(true);
     console.log(year, phone, mode, major, view, courses);
 
     const newstate = {
@@ -125,11 +132,12 @@ const Profile = () => {
       profileType: view,
       courses: courses,
     };
+
     updateData(newstate);
     console.log(result);
   };
 
-  const style = {
+  const form_style = {
     width: "100%",
     maxWidth: "20rem",
     // bgcolor: "background.paper",
@@ -138,36 +146,33 @@ const Profile = () => {
     padding: "0",
   };
 
-  const styles = {
+  const courses_styles = {
     style2 : {
       width: "100%",
       maxWidth: "20rem",
       bgcolor: "background.paper",
       borderRadius: "5px",
-      marginBottom: "0.5rem",
+      marginBottom: "1rem",
       marginTop: "0",
   }};
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm" className="main-container">
       <Stack className="main">
         <div className="profile-header">
           <Avatar
             className="profile-pic"
             sx={{
               width: 40,
-              height: 40
-            ,
-              marginBottom: ".2rem",
-              marginTop: "-3rem",
+              height: 40,
             }}
             src={userData ? userData.photoURL : ""}
           ></Avatar>
+          <h5>{userDisplayName}</h5>
         </div>
-        <div>
-        {userDisplayName}
+        <div className="edit-btn-div">
         {"   "}
-        {editing ? (
+        {canClickEdit ? (
           <Button
             size="small"
             variant="outlined"
@@ -180,14 +185,14 @@ const Profile = () => {
           <Button
             size="small"
             variant="contained"
-            onClick={enableSave}
-            startIcon={<SaveIcon />}
+            onClick={cancelEdit}
+            startIcon={<CloseIcon />}
           >
-            Save
+            Cancel
           </Button>
         )}
         </div>
-        <Container sx={style} >
+        <Container sx={form_style} >
           <FormControl variant="filled" className="profile-field">
             <InputLabel id="simple-select">Graduation Year</InputLabel>
             <Select
@@ -195,7 +200,7 @@ const Profile = () => {
               id="simple-select-field"
               value={year}
               onChange={handleChangeYear}
-              inputProps={{ readOnly: editing }}
+              inputProps={{ readOnly: canClickEdit }}
             >
               <MenuItem value={"2023"}>2023</MenuItem>
               <MenuItem value={"2024"}>2024</MenuItem>
@@ -207,7 +212,7 @@ const Profile = () => {
           </FormControl>
           <MuiTelInput
             className="profile-field"
-            inputProps={{ readOnly: editing, label: "Phone Number" }}
+            inputProps={{ readOnly: canClickEdit, label: "Phone Number" }}
             variant="filled"
             sx={{ width: "100%" }}
             defaultCountry="us"
@@ -231,7 +236,7 @@ const Profile = () => {
             ]}
             getOptionLabel={(option) => option}
             filterSelectedOptions
-            readOnly={editing}
+            readOnly={canClickEdit}
             value={major}
             renderInput={(params) => (
               <TextField
@@ -249,7 +254,7 @@ const Profile = () => {
               id="simple-select-field"
               value={mode}
               onChange={handleChangeMode}
-              inputProps={{ readOnly: editing }}
+              inputProps={{ readOnly: canClickEdit }}
             >
               <MenuItem value={"Remote"}>Remote</MenuItem>
               <MenuItem value={"In-person"}>In-person</MenuItem>
@@ -262,7 +267,7 @@ const Profile = () => {
               id="simple-select-field"
               value={view}
               onChange={handleChangeView}
-              inputProps={{ readOnly: editing }}
+              inputProps={{ readOnly: canClickEdit }}
             >
               <MenuItem value={"Public"}>Public View</MenuItem>
               <MenuItem value={"Anonymous"}>Anonymous</MenuItem>
@@ -270,7 +275,7 @@ const Profile = () => {
           </FormControl>
         </Container>
         <Autocomplete
-          sx={styles.style2}
+          sx={courses_styles.style2}
           multiple
           size="small"
           id="tags-outlined"
@@ -278,15 +283,27 @@ const Profile = () => {
           options={setupCourses}
           getOptionLabel={(option) => option}
           // filterSelectedOptions
-          readOnly={editing}
+          readOnly={canClickEdit}
           value={courses}
           renderInput={(params) => (
             <TextField {...params} variant="filled" label="Selected Courses" />
           )}
         />
-        <Button size="small" variant="contained" onClick={signOut}>
+        {canClickEdit ? 
+        (<Button 
+          size="small" 
+          variant="contained" 
+          onClick={signOut}>
           Sign Out
-        </Button>
+        </Button>) :
+        (<Button
+          size="small"
+          variant="contained"
+          onClick={enableSave}
+          startIcon={<SaveIcon />}
+        >
+          Save
+        </Button>)}
       </Stack>
       <Banner />
     </Container>

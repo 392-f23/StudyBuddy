@@ -1,10 +1,9 @@
 .main{
     text-align: center;
-    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    margin-bottom: 5rem;
 }
 
 #simple-select-field{
@@ -18,8 +17,16 @@
     align-items: center;
 }
 
+.profile-header h5 {
+    padding-top: 5px;
+}
+
 .profile-field {
     width: 100%;
     margin-top: 10px !important;
     background-color: white;
+}
+
+.edit-btn-div {
+    padding-top: 5px;
 }
