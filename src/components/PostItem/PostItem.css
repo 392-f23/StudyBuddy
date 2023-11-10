@@ -55,10 +55,10 @@
 }
 
 .post-time {
-    width: 40%;
+    width: 30%;
     text-align: right;
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.75rem;
 }
 
 .post-user {
