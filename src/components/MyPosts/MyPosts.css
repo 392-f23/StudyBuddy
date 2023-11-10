@@ -1,0 +1,15 @@
+.feed-stack {
+    margin-bottom: 5rem;
+}
+
+.home-container {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.post-button{
+    display:flex;
+    justify-content: end;
+    margin-bottom: 20;
+    margin-right: .5rem;
+}

@@ -3,6 +3,7 @@ import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import SvgIcon from "@mui/material/SvgIcon";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import { Link } from "react-router-dom";
 
 function HomeIcon(props) {
@@ -31,6 +32,12 @@ const Banner = () => {
           icon={<AccountCircleIcon />}
           component={Link}
           to="/profile"
+        />
+        <BottomNavigationAction
+          label="My Posts"
+          icon={<CalendarViewMonthIcon />}
+          component={Link}
+          to="/myposts"
         />
       </BottomNavigation>
     </Paper>

@@ -4,9 +4,10 @@ import "./PostItem.css";
 
 export const PostItem = ({
   post,
-  handleOpenContact,
-  handleOpenAvailability,
+  handleOpenLeftBtn,
+  handleOpenRightBtn,
   handleOpenProfile,
+  modifying,
 }) => {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -76,14 +77,18 @@ export const PostItem = ({
       <p className="post-location">
         <b>Location</b>: {post.location}
       </p>
-      <div className="button-flex">
-        <Button variant="contained" onClick={handleOpenContact}>
-          Contact
-        </Button>
-        <Button variant="contained" onClick={handleOpenAvailability}>
-          Availability
-        </Button>
-      </div>
+        <div className="button-flex">
+          <Button variant="contained" onClick={handleOpenLeftBtn}>
+            {modifying ? "Edit" : "Contact"}
+          </Button>
+          <Button variant="contained" onClick={handleOpenRightBtn}>
+            {modifying ? "Delete" : "Availabilty"}
+          </Button>
+        </div>
     </Item>
   );
 };
+
+PostItem.defaultProps = {
+  modifying: false
+}

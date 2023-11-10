@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Signin } from "./components/Signin/Signin";
 import { SignUp } from "./components/SignUp/SignUp";
+import MyPosts from "./components/MyPosts/MyPosts";
 
 const App = () => {
   const [posts, result] = useDbData("/posts");
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/feed" element={<Feed posts={posts} />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/myposts" element={<MyPosts posts={posts} />} />
             <Route path="/create_post" element={<PostForm />} />
           </Routes>
         </BrowserRouter>

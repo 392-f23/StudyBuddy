@@ -3,7 +3,7 @@ import { Button, Container } from "@mui/material";
 import { Stack } from "@mui/system";
 import Banner from "../Banner/Banner";
 import { PostItem } from "../PostItem/PostItem";
-import "./Feed.css";
+import "./MyPosts.css";
 import ContactModal from "../ContactModal/ContactModal";
 import AvailabilityModal from "../AvailabilityModal/AvailabiltyModal";
 import InfoDialog from "../Dialog/Dialog";
@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDbData, useAuth } from "../../utilities/firebase";
 import ProfileModal from "../ProfileModal/ProfileModal";
 
-const Feed = ({ posts }) => {
+const MyPosts = ({ posts }) => {
   const navigate = useNavigate();
   const [userData, error] = useDbData("/users");
   const [user] = useAuth();
@@ -27,37 +27,15 @@ const Feed = ({ posts }) => {
     }
   }, [userData]);
 
-  const [contact, SetContact] = useState({});
-  const [availability, SetAvailability] = useState("");
   const [profile, setProfile] = useState("");
-  const [openContact, setOpenContact] = useState(false);
-  const [openAvailability, setOpenAvailability] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
 
-  const handleClickOpenContact = (post_item) => {
-    const contact_email = userData[post_item.user_id].email;
-    const contact_phone = userData[post_item.user_id].phoneNumber;
-    SetContact({ email: contact_email, phone_number: contact_phone });
-    setOpenContact(true);
+  const handleClickOpenEdit = (post_item) => {
+    alert("Editing");
   };
 
-  const handleCloseContact = () => {
-    setOpenContact(false);
-  };
-
-  const handleClickOpenAvailability = (post_item) => {
-    let availabilityArr = post_item.availability;
-    if (availabilityArr) {
-      availabilityArr = availabilityArr.map(
-        (x) => `${x.date} ${x.start_time} - ${x.end_time}`
-      );
-    }
-    SetAvailability(availabilityArr || ["Not Provided"]);
-    setOpenAvailability(true);
-  };
-
-  const handleCloseAvailability = () => {
-    setOpenAvailability(false);
+  const handleClickOpenDelete = (post_item) => {
+    alert("Deleting");
   };
 
   const handleClickOpenProfile = (post_item) => {
@@ -93,20 +71,6 @@ const Feed = ({ posts }) => {
   return (
     <Container maxWidth="sm" className="home-container">
       <InfoDialog
-        title={"Contact"}
-        open={openContact}
-        handleClose={handleCloseContact}
-      >
-        <ContactModal contact={contact} />
-      </InfoDialog>
-      <InfoDialog
-        title={"Availability"}
-        open={openAvailability}
-        handleClose={handleCloseAvailability}
-      >
-        <AvailabilityModal availability={availability} />
-      </InfoDialog>
-      <InfoDialog
         title={"Profile"}
         open={openProfile}
         handleClose={handleCloseProfile}
@@ -136,16 +100,15 @@ const Feed = ({ posts }) => {
                 course !== "All" ? post.course === course : true
               )
               .filter((post) => displayCourseBasedOnMode(post.location))
+              .filter((post) => post.user_id === user.uid)
               .map((item, index) => (
                 <PostItem
                   key={index}
                   post={item}
-                  handleOpenLeftBtn={() => handleClickOpenContact(item)}
-                  handleOpenRightBtn={() =>
-                    handleClickOpenAvailability(item)
-                  }
+                  handleOpenLeftBtn={() => handleClickOpenEdit(item)}
+                  handleOpenRightBtn={() => handleClickOpenDelete(item)}
                   handleOpenProfile={() => handleClickOpenProfile(item)}
-                  modifying={false}
+                  modifying={true}
                 />
               ))}
         </Stack>
@@ -155,4 +118,4 @@ const Feed = ({ posts }) => {
   );
 };
 
-export default Feed;
+export default MyPosts;
