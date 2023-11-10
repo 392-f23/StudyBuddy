@@ -26,7 +26,7 @@ import { MuiTelInput } from "mui-tel-input"; //https://www.npmjs.com/package/mui
 import { FirebaseSignOut } from "../../utilities/firebase";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useDbData,useDbUpdate} from "../../utilities/firebase";
+import { useDbData, useDbUpdate } from "../../utilities/firebase";
 
 const Profile = () => {
   const auth = getAuth();
@@ -36,10 +36,9 @@ const Profile = () => {
 
   useEffect(() => {
     if (coursesFromDB) {
-      setSetupCourses(Object.keys(coursesFromDB).slice(700,900));
+      setSetupCourses(Object.keys(coursesFromDB).slice(700, 900));
     }
   }, [coursesFromDB]);
-
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -53,7 +52,7 @@ const Profile = () => {
   }, []);
   const [userData, setUserData] = useDbData("/users/" + uid);
   // console.log(userData)
-  const [updateData,result]=useDbUpdate("/users/" + uid);
+  const [updateData, result] = useDbUpdate("/users/" + uid);
   const navigate = useNavigate();
 
   const signOut = () => {
@@ -73,7 +72,6 @@ const Profile = () => {
 
   const [mode, setMode] = React.useState("");
   const handleChangeMode = (event) => {
-
     setMode(event.target.value);
   };
 
@@ -106,8 +104,6 @@ const Profile = () => {
     }
   }, [userData]);
 
-  
-
   const [editing, setEditing] = useState(true);
 
   const enableEditingView = () => {
@@ -119,16 +115,16 @@ const Profile = () => {
   const enableSave = () => {
     setSave(false);
     setEditing(true);
-    console.log(year,phone, mode,major,view, courses);
-    
-    const newstate={
-        year: year,
-        phoneNumber:phone,
-        mode:mode,
-        major: major,
-        profileType:view,
-        courses:courses
-    }
+    console.log(year, phone, mode, major, view, courses);
+
+    const newstate = {
+      year: year,
+      phoneNumber: phone,
+      mode: mode,
+      major: major,
+      profileType: view,
+      courses: courses,
+    };
     updateData(newstate);
     console.log(result);
   };
@@ -138,8 +134,8 @@ const Profile = () => {
     maxWidth: "20rem",
     bgcolor: "background.paper",
     borderRadius: "4px",
-    margin: '0.5rem 0',
-    padding: '0'
+    margin: "0.5rem 0",
+    padding: "0",
   };
 
   const style2 = {
@@ -148,43 +144,47 @@ const Profile = () => {
     bgcolor: "background.paper",
     borderRadius: "4px",
     marginBottom: "0.5rem",
-    marginTop: "0"
+    marginTop: "0",
   };
-
-
 
   return (
     <Container maxWidth="sm">
       <Stack className="main">
-        <Avatar
-          sx={{ width: 50, height: 50, marginBottom: ".5rem", marginTop: '-2rem'}}
-          src={userData ? userData.photoURL : ""}
-        ></Avatar>
-        <Grid container justifyContent="space-evenly">
+        {/* <Grid container justifyContent="space-evenly"> */}
+        <div className="profile-header">
+          <Avatar
+            className="profile-pic"
+            sx={{
+              width: 50,
+              height: 50,
+              marginBottom: ".5rem",
+              marginTop: "-2rem",
+            }}
+            src={userData ? userData.photoURL : ""}
+          ></Avatar>
           <h3>{userDisplayName}</h3>
-          {editing ? (
-            <Button
-              variant="outlined"
-              onClick={enableEditingView}
-              startIcon={<EditIcon />}
-            >
-              Edit
-            </Button>
-          ) : (
-            <Button
-              variant="outlined"
-              onClick={enableSave}
-              startIcon={<SaveIcon />}
-            >
-              Save
-            </Button>
-          )}
-        </Grid>
+        </div>
+        {editing ? (
+          <Button
+            variant="outlined"
+            onClick={enableEditingView}
+            startIcon={<EditIcon />}
+          >
+            Edit
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            onClick={enableSave}
+            startIcon={<SaveIcon />}
+          >
+            Save
+          </Button>
+        )}
+        {/* </Grid> */}
         <Container sx={style}>
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="simple-select">
-              Graduation Year
-            </InputLabel>
+            <InputLabel id="simple-select">Graduation Year</InputLabel>
             <Select
               labelId="simple-select"
               id="simple-select-field"
@@ -209,7 +209,6 @@ const Profile = () => {
             onChange={handleChangePhone}
           />
 
-
           <Autocomplete
             // id="tags-filled"
             onChange={handleChangeMajor}
@@ -223,19 +222,21 @@ const Profile = () => {
               "Literature",
               "Math",
             ]}
-           
             getOptionLabel={(option) => option}
             filterSelectedOptions
             readOnly={editing}
             value={major}
             renderInput={(params) => (
-              <TextField  className="text-class" variant="filled" label="Major" {...params} />
+              <TextField
+                className="text-class"
+                variant="filled"
+                label="Major"
+                {...params}
+              />
             )}
           />
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="simple-select">
-              Mode Preference
-            </InputLabel>
+            <InputLabel id="simple-select">Mode Preference</InputLabel>
             <Select
               labelId="simple-select"
               id="simple-select-field"
@@ -248,9 +249,7 @@ const Profile = () => {
             </Select>
           </FormControl>
           <FormControl variant="filled" sx={{ width: "100%" }}>
-            <InputLabel id="simple-select">
-              Profile Type
-            </InputLabel>
+            <InputLabel id="simple-select">Profile Type</InputLabel>
             <Select
               labelId="demo-simple-select-helper-label"
               id="simple-select-field"
