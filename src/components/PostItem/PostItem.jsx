@@ -49,13 +49,19 @@ export const PostItem = ({
   return (
     <Item className="post-item">
       <div className="post-header">
-        <h2 className="post-description">{post.title}</h2>
+        <h2 className="post-top">
+          <div className="post-title"> {post.title} </div>
+          <div className="post-time"> {calculateTimeAgo(post.time)} ago</div>
+        </h2>
         <div className="post-user">
-            <Avatar sx={{ width: 25, height: 25, marginBottom: '.5rem'}} src={post.userImage ? post.userImage : ''}></Avatar>
-            <div style={{marginLeft: "5px", marginRight: "10px"}}>
-              {post.userName ? post.userName : 'Anonymous'}
-            </div>
-            {calculateTimeAgo(post.time)} ago
+          <Avatar
+            className="profile-pic"
+            sx={{ width: 25, height: 25, marginBottom: ".5rem" }}
+            src={post.userImage ? post.userImage : ""}
+          ></Avatar>
+          <div style={{ marginLeft: "5px", marginRight: "10px" }}>
+            {post.userName ? post.userName : "Anonymous"}
+          </div>
         </div>
       </div>
       <Chip className="post-course" size="small" label={post.course} />
