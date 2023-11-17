@@ -6,7 +6,8 @@ import { PostItem } from "../PostItem/PostItem";
 import "./Feed.css";
 import ContactModal from "../ContactModal/ContactModal";
 import AvailabilityModal from "../AvailabilityModal/AvailabiltyModal";
-import InfoDialog from "../Dialog/Dialog";
+import InfoDialog from "../Dialog/Dialog-chatgpt";
+// import InfoDialog from './InfoDialog';
 import Filters from "../Filters/Filters";
 import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -150,7 +151,7 @@ const Feed = ({ posts }) => {
               ))}
         </Stack>
       </Container>
-      <Banner />
+      <Banner currentPage={"Home"}/>
     </Container>
   );
 };

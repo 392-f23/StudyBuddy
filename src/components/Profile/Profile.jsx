@@ -305,7 +305,7 @@ const Profile = () => {
           Save
         </Button>)}
       </Stack>
-      <Banner />
+      <Banner currentPage={"Profile"}/>
     </Container>
   );
 };

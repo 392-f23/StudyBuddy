@@ -113,7 +113,7 @@ const MyPosts = ({ posts }) => {
               ))}
         </Stack>
       </Container>
-      <Banner />
+      <Banner currentPage={"MyPosts"} />
     </Container>
   );
 };

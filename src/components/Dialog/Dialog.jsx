@@ -27,3 +27,4 @@ export default function InfoDialog({ children, title, open, handleClose }) {
     </Dialog>
   );
 }
+

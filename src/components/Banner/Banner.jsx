@@ -14,7 +14,7 @@ function HomeIcon(props) {
   );
 }
 
-const Banner = () => {
+const Banner = ( {currentPage} ) => {
   return (
     <Paper
       sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100}}
@@ -24,18 +24,21 @@ const Banner = () => {
         <BottomNavigationAction
           label="Home"
           icon={<HomeIcon />}
+          style={{color: `${currentPage === "Home" ? "#4E2A84" : "gray"}` }}
           component={Link}
           to="/feed"
         />
         <BottomNavigationAction
           label="Profile"
           icon={<AccountCircleIcon />}
+          style={{color: `${currentPage === "Profile" ? "#4E2A84" : "gray"}` }}
           component={Link}
           to="/profile"
         />
         <BottomNavigationAction
           label="My Posts"
           icon={<CalendarViewMonthIcon />}
+          style={{color: `${currentPage === "MyPosts" ? "#4E2A84" : "gray"}` }}
           component={Link}
           to="/myposts"
         />
