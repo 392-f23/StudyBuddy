@@ -1,46 +1,40 @@
-import * as React from "react";
-import { Paper, BottomNavigation, BottomNavigationAction } from "@mui/material";
-import SvgIcon from "@mui/material/SvgIcon";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
-import { Link } from "react-router-dom";
-
-function HomeIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import PersonIcon from '@material-ui/icons/Person';
+import ListIcon from '@material-ui/icons/List';
 
 const Banner = () => {
+  const history = useHistory();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleNavigation = (path) => {
+    history.push(path);
+  };
+
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100}}
-      elevation={3}
-    >
-      <BottomNavigation showLabels>
-        <BottomNavigationAction
-          label="Home"
-          icon={<HomeIcon />}
-          component={Link}
-          to="/feed"
-        />
-        <BottomNavigationAction
-          label="Profile"
-          icon={<AccountCircleIcon />}
-          component={Link}
-          to="/profile"
-        />
-        <BottomNavigationAction
-          label="My Posts"
-          icon={<CalendarViewMonthIcon />}
-          component={Link}
-          to="/myposts"
-        />
-      </BottomNavigation>
-    </Paper>
+    <BottomNavigation value={value} onChange={handleChange} showLabels>
+      <BottomNavigationAction
+        label="Home"
+        icon={<HomeIcon />}
+        onClick={() => handleNavigation('/feed')}
+      />
+      <BottomNavigationAction
+        label="Profile"
+        icon={<PersonIcon />}
+        onClick={() => handleNavigation('/profile')}
+      />
+      <BottomNavigationAction
+        label="My Posts"
+        icon={<ListIcon />}
+        onClick={() => handleNavigation('/myposts')}
+      />
+    </BottomNavigation>
   );
 };
 
